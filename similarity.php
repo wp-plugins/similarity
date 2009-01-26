@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 1.2
+Version: 1.3
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -12,6 +12,7 @@ Author URI: http://www.davidjmiller.org/
 	Template Tag: Returns a list of related posts.
 		e.g.: <?php sim_by_tag(); ?> determines similarity based on the tags applied to the posts
 		e.g.: <?php sim_by_cat(); ?> determines similarity based on the categories assigned to the posts
+		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each according to the ratio you assign
 	Full help and instructions at http://www.davidjmiller.org/similarity/
 */
 function sim_by_tag() {
@@ -20,6 +21,12 @@ function sim_by_tag() {
 }
 function sim_by_cat() {
 	$list = get_list("cat");
+	print_similarity($list);
+}
+function sim_by_mix() {
+	$taglist = get_list("tag");
+	$catlist = get_list("cat");
+	$list = mix_lists($taglist, $catlist);
 	print_similarity($list);
 }
 
@@ -98,6 +105,46 @@ function get_list($type = 'tag') {
 	return $list;
 }
 
+function mix_lists($taglist, $catlist) {
+	$options = get_option(basename(__FILE__, ".php"));
+	$list = array();
+	$id_list = array();
+	$strength_list = array();
+	$tagweight = stripslashes($options['tag_weight']);
+	$catweight = stripslashes($options['cat_weight']);
+	if ($tagweight + $catweight == 0) {
+		$tagweight = 1;
+		$catweight = 1;
+	}
+	while(sizeof($taglist) > 0) {
+		array_push($id_list,$taglist[0]['post_id']);
+		array_push($strength_list,($tagweight * $taglist[0]['strength']));
+		array_shift($taglist);
+	}
+	while(sizeof($catlist) > 0) {
+		if (!array_search($catlist[0]['post_id'],$id_list)) {
+			if ($id_list[0] == $catlist[0]['post_id']) {
+				$strength_list[0] += ($catweight * $catlist[0]['strength']);
+			} else {
+				array_push($id_list,$catlist[0]['post_id']);
+				array_push($strength_list,($catweight * $catlist[0]['strength']));
+			}
+		} else {
+			$i = array_search($catlist[0]['post_id'],$id_list);
+			$strength_list[$i] += ($catweight * $catlist[0]['strength']);
+		}
+		array_shift($catlist);
+	}
+	if (sizeof($strength_list) > 1 ) {
+		array_multisort($strength_list,SORT_DESC,$id_list);
+	}
+	while(sizeof($id_list) > 0) {
+		$set = array("post_id"=>array_shift($id_list), "strength"=>number_format((array_shift($strength_list) / ($tagweight + $catweight)),3));
+		array_push($list,$set);
+	}
+	return $list;
+}
+
 /*
 	Define the options menu
 */
@@ -123,6 +170,8 @@ $default_options['none_text'] = '<li>'.__('Unique Post').'</li>';
 $default_options['prefix'] = '<ul>';
 $default_options['suffix'] = '</ul>';
 $default_options['output_template'] = '<li>{link} ({strength})</li>';
+$default_options['tag_weight'] = 1;
+$default_options['cat_weight'] = 1;
 // the plugin options are stored in the options table under the name of the plugin file sans extension
 add_option(basename(__FILE__, ".php"), $default_options, 'options for the Similarity plugin');
 
@@ -137,6 +186,8 @@ function options_page(){
 		$options['prefix'] = $_POST['prefix'];
 		$options['suffix'] = $_POST['suffix'];
 		$options['output_template'] = $_POST['output_template'];
+		$options['tag_weight'] = $_POST['tag_weight'];
+		$options['cat_weight'] = $_POST['cat_weight'];
 
 		// store the option values under the plugin filename
 		update_option(basename(__FILE__, ".php"), $options);
@@ -156,23 +207,35 @@ function options_page(){
 		<fieldset class="options">
 		<table class="optiontable">
 			<tr valign="top">
-				<th scope="row"><?php _e('Number of posts to show:') ?></th>
+				<th scope="row" align="left"><?php _e('Number of posts to show:') ?></th>
 				<td><input name="limit" type="text" id="limit" value="<?php echo $options['limit']; ?>" size="2" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Default display if no matches:') ?></th>
+				<th scope="row" align="left"><?php _e('Default display if no matches:') ?></th>
 				<td><input name="none_text" type="text" id="none_text" value="<?php echo htmlspecialchars(stripslashes($options['none_text'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Text and codes before the list:') ?></th>
+
+
+
+				<th scope="row" align="left"><?php _e('Text and codes before the list:') ?></th>
+
 				<td><input name="prefix" type="text" id="prefix" value="<?php echo htmlspecialchars(stripslashes($options['prefix'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Text and codes after the list:') ?></th>
+				<th scope="row" align="left"><?php _e('Text and codes after the list:') ?></th>
 				<td><input name="suffix" type="text" id="suffix" value="<?php echo htmlspecialchars(stripslashes($options['suffix'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Output template:') ?></th>
+				<th scope="row" align="left"><?php _e('Relative mixing weights:') ?></th>
+				<td><input name="tag_weight" type="text" id="tag_weight" value="<?php echo htmlspecialchars(stripslashes($options['tag_weight'])); ?>" size="40" /> Tags</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="left"><?php _e('') ?></th>
+				<td><input name="cat_weight" type="text" id="cat_weight" value="<?php echo htmlspecialchars(stripslashes($options['cat_weight'])); ?>" size="40" /> Categories</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="left"><?php _e('Output template:') ?></th>
 				<td><textarea name="output_template" id="output_template" rows="4" cols="60"><?php echo htmlspecialchars(stripslashes($options['output_template'])); ?></textarea><br/><?php _e('Valid template tags:{link}, {strength}, {url}, {title}') ?></td>
 			</tr>
 		</table>
