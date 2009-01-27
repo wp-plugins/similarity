@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 1.3
+Version: 1.4
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -12,7 +12,9 @@ Author URI: http://www.davidjmiller.org/
 	Template Tag: Returns a list of related posts.
 		e.g.: <?php sim_by_tag(); ?> determines similarity based on the tags applied to the posts
 		e.g.: <?php sim_by_cat(); ?> determines similarity based on the categories assigned to the posts
-		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each according to the ratio you assign
+		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each 
+
+according to the ratio you assign
 	Full help and instructions at http://www.davidjmiller.org/similarity/
 */
 function sim_by_tag() {
@@ -36,6 +38,7 @@ function print_similarity($list) {
 	$none_text = stripslashes($options['none_text']);
 	$prefix = stripslashes($options['prefix']);
 	$suffix = stripslashes($options['suffix']);
+	$format = stripslashes($options['format']);
 	$output_template = stripslashes($options['output_template']);
 	// an empty output_template makes no sense so we fall back to the default
 	if ($output_template == '') $output_template = '<li>{link} ({strength})</li>';
@@ -48,6 +51,9 @@ function print_similarity($list) {
 		}
 		for ($i = 0; $i < $limit; $i++) {
 			$post = get_post($list[$i]['post_id']);
+			if ($format == 'percent') {
+				$list[$i]['strength'] = ($list[$i]['strength'] * 100) . '%';
+			}
 			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
 			echo $impression;
 		}
@@ -76,7 +82,7 @@ function get_list($type = 'tag') {
 	if (count($results)) {
 		foreach ($results as $result) {
 			$potential += (1 / $result->rarity);
-			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID order by remix";
+			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID and object_id in (select ID from $wpdb->posts where post_parent = 0) order by remix";
 			$subsets = $wpdb->get_results($query);
 			if (count($subsets)) {
 				foreach ($subsets as $connection) {
@@ -169,6 +175,7 @@ $default_options['limit'] = 5;
 $default_options['none_text'] = '<li>'.__('Unique Post').'</li>';
 $default_options['prefix'] = '<ul>';
 $default_options['suffix'] = '</ul>';
+$default_options['format'] = 'value';
 $default_options['output_template'] = '<li>{link} ({strength})</li>';
 $default_options['tag_weight'] = 1;
 $default_options['cat_weight'] = 1;
@@ -185,6 +192,7 @@ function options_page(){
 		$options['none_text'] = $_POST['none_text'];
 		$options['prefix'] = $_POST['prefix'];
 		$options['suffix'] = $_POST['suffix'];
+		$options['format'] = $_POST['format'];
 		$options['output_template'] = $_POST['output_template'];
 		$options['tag_weight'] = $_POST['tag_weight'];
 		$options['cat_weight'] = $_POST['cat_weight'];
@@ -207,35 +215,38 @@ function options_page(){
 		<fieldset class="options">
 		<table class="optiontable">
 			<tr valign="top">
-				<th scope="row" align="left"><?php _e('Number of posts to show:') ?></th>
+				<th scope="row" align="right"><?php _e('Number of posts to show:') ?></th>
 				<td><input name="limit" type="text" id="limit" value="<?php echo $options['limit']; ?>" size="2" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="left"><?php _e('Default display if no matches:') ?></th>
+				<th scope="row" align="right"><?php _e('Default display if no matches:') ?></th>
 				<td><input name="none_text" type="text" id="none_text" value="<?php echo htmlspecialchars(stripslashes($options['none_text'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
-
-
-
-				<th scope="row" align="left"><?php _e('Text and codes before the list:') ?></th>
-
+				<th scope="row" align="right"><?php _e('Text and codes before the list:') ?></th>
 				<td><input name="prefix" type="text" id="prefix" value="<?php echo htmlspecialchars(stripslashes($options['prefix'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="left"><?php _e('Text and codes after the list:') ?></th>
+				<th scope="row" align="right"><?php _e('Text and codes after the list:') ?></th>
 				<td><input name="suffix" type="text" id="suffix" value="<?php echo htmlspecialchars(stripslashes($options['suffix'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="left"><?php _e('Relative mixing weights:') ?></th>
+				<th scope="row" align="right"><?php _e('Display format for similarity strength:') ?></th>
+				<td>
+					<input type="radio" name="format" id="format" value="percent"<?php if ($options['format'] == 'percent') echo ' checked'; ?>>Percent</input>
+					<input type="radio" name="format" id="format" value="value"<?php if ($options['format'] == 'value') echo ' checked'; ?>>Value</input>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right"><?php _e('Relative mixing weights:') ?></th>
 				<td><input name="tag_weight" type="text" id="tag_weight" value="<?php echo htmlspecialchars(stripslashes($options['tag_weight'])); ?>" size="40" /> Tags</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="left"><?php _e('') ?></th>
+				<th scope="row" align="right"><?php _e('') ?></th>
 				<td><input name="cat_weight" type="text" id="cat_weight" value="<?php echo htmlspecialchars(stripslashes($options['cat_weight'])); ?>" size="40" /> Categories</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="left"><?php _e('Output template:') ?></th>
+				<th scope="row" align="right"><?php _e('Output template:') ?></th>
 				<td><textarea name="output_template" id="output_template" rows="4" cols="60"><?php echo htmlspecialchars(stripslashes($options['output_template'])); ?></textarea><br/><?php _e('Valid template tags:{link}, {strength}, {url}, {title}') ?></td>
 			</tr>
 		</table>
