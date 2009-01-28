@@ -164,7 +164,7 @@ function similarity_option_menu() {
 		if ($user_level < 8) return;
 	}
 	if (function_exists('add_options_page')) {
-		add_options_page(__('Similarity Options'), __('Similarity'), 1, __FILE__, 'options_page');
+		add_options_page(__('Similarity Options', 'similarity'), __('Similarity', 'similarity'), 1, __FILE__, 'options_page');
 	}
 }
 // Install the options page
@@ -172,7 +172,7 @@ add_action('admin_menu', 'similarity_option_menu');
 
 // Prepare the default set of options
 $default_options['limit'] = 5;
-$default_options['none_text'] = '<li>'.__('Unique Post').'</li>';
+$default_options['none_text'] = '<li>'.__('Unique Post', 'similarity').'</li>';
 $default_options['prefix'] = '<ul>';
 $default_options['suffix'] = '</ul>';
 $default_options['format'] = 'value';
@@ -201,7 +201,7 @@ function options_page(){
 		update_option(basename(__FILE__, ".php"), $options);
 		
 		// Show a message to say we've done something
-		echo '<div class="updated"><p>' . __('Options saved') . '</p></div>';
+		echo '<div class="updated"><p>' . __('Options saved', 'similarity') . '</p></div>';
 	} else {
 		// If we are just displaying the page we first load up the options array
 		$options = get_option(basename(__FILE__, ".php"));
@@ -209,49 +209,49 @@ function options_page(){
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap">
-		<h2><?php echo ucwords(str_replace('-', ' ', basename(__FILE__, ".php"). __(' Options'))); ?></h2>
-		<h3><a href="http://www.davidjmiller.org/similarity/">Help and Instructions</a></h3>
+		<h2><?php echo ucwords(str_replace('-', ' ', basename(__FILE__, ".php"). __(' Options', 'similarity'))); ?></h2>
+		<h3><a href="http://www.davidjmiller.org/similarity/"><?php _e('Help and Instructions', 'similarity') ?></a></h3>
 		<form method="post" action="">
 		<fieldset class="options">
 		<table class="optiontable">
 			<tr valign="top">
-				<th scope="row" align="right"><?php _e('Number of posts to show:') ?></th>
+				<th scope="row" align="right"><?php _e('Number of posts to show', 'similarity') ?>:</th>
 				<td><input name="limit" type="text" id="limit" value="<?php echo $options['limit']; ?>" size="2" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="right"><?php _e('Default display if no matches:') ?></th>
+				<th scope="row" align="right"><?php _e('Default display if no matches', 'similarity') ?>:</th>
 				<td><input name="none_text" type="text" id="none_text" value="<?php echo htmlspecialchars(stripslashes($options['none_text'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="right"><?php _e('Text and codes before the list:') ?></th>
+				<th scope="row" align="right"><?php _e('Text and codes before the list', 'similarity') ?>:</th>
 				<td><input name="prefix" type="text" id="prefix" value="<?php echo htmlspecialchars(stripslashes($options['prefix'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="right"><?php _e('Text and codes after the list:') ?></th>
+				<th scope="row" align="right"><?php _e('Text and codes after the list', 'similarity') ?>:</th>
 				<td><input name="suffix" type="text" id="suffix" value="<?php echo htmlspecialchars(stripslashes($options['suffix'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="right"><?php _e('Display format for similarity strength:') ?></th>
+				<th scope="row" align="right"><?php _e('Display format for similarity strength', 'similarity') ?>:</th>
 				<td>
-					<input type="radio" name="format" id="format" value="percent"<?php if ($options['format'] == 'percent') echo ' checked'; ?>>Percent</input>
-					<input type="radio" name="format" id="format" value="value"<?php if ($options['format'] == 'value') echo ' checked'; ?>>Value</input>
+					<input type="radio" name="format" id="format" value="percent"<?php if ($options['format'] == 'percent') echo ' checked'; ?>><?php _e('Percent', 'similarity') ?></input>
+					<input type="radio" name="format" id="format" value="value"<?php if ($options['format'] == 'value') echo ' checked'; ?>><?php _e('Value', 'similarity') ?></input>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="right"><?php _e('Relative mixing weights:') ?></th>
-				<td><input name="tag_weight" type="text" id="tag_weight" value="<?php echo htmlspecialchars(stripslashes($options['tag_weight'])); ?>" size="40" /> Tags</td>
+				<th scope="row" align="right"><?php _e('Relative mixing weights', 'similarity') ?>:</th>
+				<td><input name="tag_weight" type="text" id="tag_weight" value="<?php echo htmlspecialchars(stripslashes($options['tag_weight'])); ?>" size="40" /> <?php _e('Tags', 'similarity') ?></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="right"><?php _e('') ?></th>
-				<td><input name="cat_weight" type="text" id="cat_weight" value="<?php echo htmlspecialchars(stripslashes($options['cat_weight'])); ?>" size="40" /> Categories</td>
+				<th scope="row" align="right"><?php _e('', 'similarity') ?></th>
+				<td><input name="cat_weight" type="text" id="cat_weight" value="<?php echo htmlspecialchars(stripslashes($options['cat_weight'])); ?>" size="40" /> <?php _e('Categories', 'similarity') ?></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="right"><?php _e('Output template:') ?></th>
-				<td><textarea name="output_template" id="output_template" rows="4" cols="60"><?php echo htmlspecialchars(stripslashes($options['output_template'])); ?></textarea><br/><?php _e('Valid template tags:{link}, {strength}, {url}, {title}') ?></td>
+				<th scope="row" align="right"><?php _e('Output template', 'similarity') ?>:</th>
+				<td><textarea name="output_template" id="output_template" rows="4" cols="60"><?php echo htmlspecialchars(stripslashes($options['output_template'])); ?></textarea><br/><?php _e('Valid template tags', 'similarity') ?>:{link}, {strength}, {url}, {title}</td>
 			</tr>
 		</table>
 		</fieldset>
-		<div class="submit"><input type="submit" name="update_options" value="<?php _e('Update') ?>"  style="font-weight:bold;" /></div>
+		<div class="submit"><input type="submit" name="update_options" value="<?php _e('Update', 'similarity') ?>"  style="font-weight:bold;" /></div>
 		</form>    		
 	</div>
 	<?php	
