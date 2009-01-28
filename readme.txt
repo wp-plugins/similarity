@@ -1,8 +1,7 @@
 === Similarity ===
 Contributors: davidjmillerorg
-Donate link: http://example.com/
 Tags: posts, tags, categories, related posts
-Requires at least: 2.3
+Requires at least: 2.6
 Tested up to: 2.7
 Stable tag: trunk
 
@@ -40,5 +39,8 @@ To install it simply unzip the file linked above and save it in your plugins dir
 
 As of version 1.3 the plugin allows for similarity to be calculated on a combination of tags and plugins. You can also use the `sim_by_tag();` and `sim_by_cat();` commands together to generate different lists of related posts.
 
+= Can this work on versions older than 2.6? =
+
+Starting with version 1.4 I have not tested this with anything older than Wordpress 2.6 - it might work, or it might not - versions prior to 1.4 have been tested back to Wordpress 2.3. Functions added since Version 1.3 can be added to the older versions and work in earlier versions of Wordpress, but Version 1.4 included a bugfix related to post revisions that was introduced into Wordpress 2.6.
 == Screenshots ==
 No Screenshots
