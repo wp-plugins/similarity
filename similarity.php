@@ -277,7 +277,7 @@ function options_page(){
 				<td><input name="tag_weight" type="text" id="tag_weight" value="<?php echo htmlspecialchars(stripslashes($options['tag_weight'])); ?>" size="40" /> <?php _e('Tags', 'similarity') ?></td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" align="right"><?php _e('', 'similarity') ?></th>
+				<th scope="row" align="right">&nbsp;</th>
 				<td><input name="cat_weight" type="text" id="cat_weight" value="<?php echo htmlspecialchars(stripslashes($options['cat_weight'])); ?>" size="40" /> <?php _e('Categories', 'similarity') ?></td>
 			</tr>
 			<tr valign="top">
