@@ -1,7 +1,7 @@
 === Similarity ===
 Contributors: davidjmillerorg
 Tags: posts, tags, categories, related posts
-Requires at least: 2.6
+Requires at least: 2.3
 Tested up to: 2.7
 Stable tag: trunk
 
@@ -15,7 +15,7 @@ Options include:
 * Default Display if no matches - if there are no matches this is what will be displayed, this is not displayed if there are matches, but fewer than the set maximum.
 * Text and Codes before the list - assuming you want to do a list this is where you would place the `<ul>` or `<ol>` You may also place any other code you would like to have preceeding the list.
 * Text and Codes after the list - this would be the place for `</ul>` or `</ol>` You may also place any other code you would like to have following the list.
-* Display format for similarity strength - Value displays the {strength} in a decimal format (0.873) while Percent displays the {strength} in a percentage format (87.3%)
+* Display format for similarity strength - Value displays the {strength} in a decimal format (0.873), Percent displays the {strength} in a percentage format (87.3%), Text displays {strength} as a word (<strong>Strong</strong>, Mild, Weak, <em>Tenuous</em>), and Visual displays a color block (Green for 100% fading to Yellow and then to Red for weak connections)
 * Relative mixing weights - these values determine the ratio given to the weight of tags vs categories when using the `sim_by_mix();` function.
 * Output template - this would be where you place the `<li>` tags. There are also 4 template tags you may use (in any configuration you can imagine) to define how the results are displayed
     o {link} - provides a link - equivelent to `<a href=”{url}”>`{title}`</a>`
@@ -39,8 +39,5 @@ To install it simply unzip the file linked above and save it in your plugins dir
 
 As of version 1.3 the plugin allows for similarity to be calculated on a combination of tags and plugins. You can also use the `sim_by_tag();` and `sim_by_cat();` commands together to generate different lists of related posts.
 
-= Can this work on versions older than 2.6? =
-
-Starting with version 1.4 I have not tested this with anything older than Wordpress 2.6 - it might work, or it might not - versions prior to 1.4 have been tested back to Wordpress 2.3. Functions added since Version 1.3 can be added to the older versions and work in earlier versions of Wordpress, but Version 1.4 included a bugfix related to post revisions that was introduced into Wordpress 2.6.
 == Screenshots ==
 No Screenshots

@@ -2,8 +2,8 @@
 /*
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/similarity/
-Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.6 and above. Older versions are compatible back to Wordpress 2.3 (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 1.4
+Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
+Version: 1.5
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -12,11 +12,12 @@ Author URI: http://www.davidjmiller.org/
 	Template Tag: Returns a list of related posts.
 		e.g.: <?php sim_by_tag(); ?> determines similarity based on the tags applied to the posts
 		e.g.: <?php sim_by_cat(); ?> determines similarity based on the categories assigned to the posts
-		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each 
-
-according to the ratio you assign
+		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each according to the ratio you assign
 	Full help and instructions at http://www.davidjmiller.org/similarity/
 */
+
+load_plugin_textdomain('similarity', 'wp-content/plugins/similarity'); 
+
 function sim_by_tag() {
 	$list = get_list("tag");
 	print_similarity($list);
@@ -51,8 +52,35 @@ function print_similarity($list) {
 		}
 		for ($i = 0; $i < $limit; $i++) {
 			$post = get_post($list[$i]['post_id']);
-			if ($format == 'percent') {
+			switch ($format)
+			{
+			case 'percent':
 				$list[$i]['strength'] = ($list[$i]['strength'] * 100) . '%';
+				break;  
+			case 'text':
+				if ($list[$i]['strength'] > 0.75) {
+					$list[$i]['strength'] = '<strong>'.__('Strong', 'similarity').'</strong>';
+				} elseif ($list[$i]['strength'] > 0.5) {
+					$list[$i]['strength'] = __('Mild', 'similarity');
+				} elseif ($list[$i]['strength'] > 0.25) {
+					$list[$i]['strength'] = __('Weak', 'similarity');
+				} else {
+					$list[$i]['strength'] = '<em>'.__('Tenuous', 'similarity').'</em>';
+				}
+				break;  
+			case 'color':
+				$r = 255;
+				$g = 255;
+				if ($list[$i]['strength'] > 0.5) {
+					$r = 255 * (.5 - ($list[$i]['strength'] - .5));
+				} elseif ($list[$i]['strength'] < 0.5) {
+					$g = 513 * $list[$i]['strength'];
+				}
+				$shade = 'rgb('.number_format($r).', '.number_format($g).', 0)';
+				$list[$i]['strength'] = '<span style="background-color: '.$shade.'; border: #000 1px solid">&nbsp;&nbsp;&nbsp;</span>';
+				break;
+			default:
+				break;
 			}
 			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
 			echo $impression;
@@ -62,7 +90,7 @@ function print_similarity($list) {
 }
 
 function get_list($type = 'tag') {
-	global $post, $wpdb;
+	global $post, $wpdb, $wp_version;
 	$list = array();
 	$id_list = array();
 	$strength_list = array();
@@ -82,7 +110,11 @@ function get_list($type = 'tag') {
 	if (count($results)) {
 		foreach ($results as $result) {
 			$potential += (1 / $result->rarity);
-			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID and object_id in (select ID from $wpdb->posts where post_parent = 0) order by remix";
+			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID";
+			if ($wp_version > 2.5) {
+				$query .= " and object_id in (select ID from $wpdb->posts where post_parent = 0)";
+			}
+			$query .= " order by remix";
 			$subsets = $wpdb->get_results($query);
 			if (count($subsets)) {
 				foreach ($subsets as $connection) {
@@ -167,6 +199,7 @@ function similarity_option_menu() {
 		add_options_page(__('Similarity Options', 'similarity'), __('Similarity', 'similarity'), 1, __FILE__, 'options_page');
 	}
 }
+
 // Install the options page
 add_action('admin_menu', 'similarity_option_menu');
 
@@ -233,7 +266,9 @@ function options_page(){
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Display format for similarity strength', 'similarity') ?>:</th>
 				<td>
-					<input type="radio" name="format" id="format" value="percent"<?php if ($options['format'] == 'percent') echo ' checked'; ?>><?php _e('Percent', 'similarity') ?></input>
+					<input type="radio" name="format" id="format" value="color"<?php if ($options['format'] == 'color') echo ' checked'; ?>><?php _e('Visual', 'similarity') ?></input>&nbsp;
+					<input type="radio" name="format" id="format" value="percent"<?php if ($options['format'] == 'percent') echo ' checked'; ?>><?php _e('Percent', 'similarity') ?></input>&nbsp;
+					<input type="radio" name="format" id="format" value="text"<?php if ($options['format'] == 'text') echo ' checked'; ?>><?php _e('Text', 'similarity') ?></input>&nbsp;
 					<input type="radio" name="format" id="format" value="value"<?php if ($options['format'] == 'value') echo ' checked'; ?>><?php _e('Value', 'similarity') ?></input>
 				</td>
 			</tr>

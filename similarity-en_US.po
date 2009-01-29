@@ -1,0 +1,117 @@
+#: similarity.php:280
+msgid ""
+msgstr ""
+"Project-Id-Version: Similarity v1.5\n"
+"PO-Revision-Date: 2009-01-28 14:39-0700\n"
+"Last-Translator: david <mr.david.miller@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;__ngettext_noop:1,2;_c\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-SearchPath-0: ."
+
+#: similarity.php:62
+msgid "Strong"
+msgstr ""
+
+#: similarity.php:64
+msgid "Mild"
+msgstr ""
+
+#: similarity.php:66
+msgid "Weak"
+msgstr ""
+
+#: similarity.php:199
+msgid "Similarity Options"
+msgstr ""
+
+#: similarity.php:199
+msgid "Similarity"
+msgstr ""
+
+#: similarity.php:208
+msgid "Unique Post"
+msgstr ""
+
+#: similarity.php:237
+msgid "Options saved"
+msgstr ""
+
+#: similarity.php:245
+msgid " Options"
+msgstr ""
+
+#: similarity.php:246
+msgid "Help and Instructions"
+msgstr ""
+
+#: similarity.php:251
+msgid "Number of posts to show"
+msgstr ""
+
+#: similarity.php:255
+msgid "Default display if no matches"
+msgstr ""
+
+#: similarity.php:259
+msgid "Text and codes before the list"
+msgstr ""
+
+#: similarity.php:263
+msgid "Text and codes after the list"
+msgstr ""
+
+#: similarity.php:267
+msgid "Display format for similarity strength"
+msgstr ""
+
+#: similarity.php:269
+msgid "Visual"
+msgstr ""
+
+#: similarity.php:270
+msgid "Percent"
+msgstr ""
+
+#: similarity.php:271
+msgid "Text"
+msgstr ""
+
+#: similarity.php:272
+msgid "Value"
+msgstr ""
+
+#: similarity.php:276
+msgid "Relative mixing weights"
+msgstr ""
+
+#: similarity.php:277
+msgid "Tags"
+msgstr ""
+
+#: similarity.php:281
+msgid "Categories"
+msgstr ""
+
+#: similarity.php:284
+msgid "Output template"
+msgstr ""
+
+#: similarity.php:285
+msgid "Valid template tags"
+msgstr ""
+
+#: similarity.php:289
+msgid "Update"
+msgstr ""
+
+#: similarity.php:68
+msgid "Tenuous"
+msgstr ""
+
