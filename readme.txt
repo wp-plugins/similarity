@@ -5,7 +5,7 @@ Requires at least: 2.3
 Tested up to: 2.7
 Stable tag: trunk
 
-Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both.
+Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both. Thank you to Li-An (http://li-an.fr/blog/) for providing the french translation included here.
 
 == Description ==
 
