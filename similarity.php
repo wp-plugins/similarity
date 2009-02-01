@@ -89,7 +89,7 @@ function print_similarity($list) {
 			srand ((double) microtime( )*1000000);
 			$i = rand($limit + 1,sizeof($list));
 			$post = get_post($list[$i]['post_id']);
-			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",'RANDOM',str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
+			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",__('RANDOM', 'similarity'),str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
 			echo $impression;
 		}
 	}
