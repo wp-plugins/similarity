@@ -89,7 +89,38 @@ function print_similarity($list) {
 			srand ((double) microtime( )*1000000);
 			$i = rand($limit + 1,sizeof($list));
 			$post = get_post($list[$i]['post_id']);
-			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",__('RANDOM', 'similarity'),str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
+			switch ($format)
+			{
+			case 'percent':
+				$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . ($list[$i]['strength'] * 100) . '%';
+				break;  
+			case 'text':
+				if ($list[$i]['strength'] > 0.75) {
+					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_strong']);
+				} elseif ($list[$i]['strength'] > 0.5) {
+					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_mild']);
+				} elseif ($list[$i]['strength'] > 0.25) {
+					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_weak']);
+				} else {
+					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_tenuous']);
+				}
+				break;  
+			case 'color':
+				$r = 255;
+				$g = 255;
+				if ($list[$i]['strength'] > 0.5) {
+					$r = 255 * (.5 - ($list[$i]['strength'] - .5));
+				} elseif ($list[$i]['strength'] < 0.5) {
+					$g = 513 * $list[$i]['strength'];
+				}
+				$shade = 'rgb('.number_format($r).', '.number_format($g).', 0)';
+				$list[$i]['strength'] = '<span style="background-color: '.$shade.'; border: #000 1px solid">' . __('RANDOM', 'similarity') . '</span>';
+				break;
+			default:
+				$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . $list[$i]['strength'];
+				break;
+			}
+			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength']),str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
 			echo $impression;
 		}
 	}
