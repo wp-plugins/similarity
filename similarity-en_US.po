@@ -130,3 +130,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
+#: similarity.php:92
+msgid "RANDOM"
+msgstr ""
+

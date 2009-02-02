@@ -119,7 +119,7 @@ function get_list($type = 'tag') {
 			$potential += (1 / $result->rarity);
 			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID";
 			if ($wp_version > 2.5) {
-				$query .= " and object_id in (select ID from $wpdb->posts where post_parent = 0)";
+				$query .= " and object_id in (select ID from $wpdb->posts where post_parent = 0 AND post_status = 'publish')";
 			}
 			$query .= " order by remix";
 			$subsets = $wpdb->get_results($query);
