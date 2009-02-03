@@ -1,0 +1,132 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Similarity v1.5\n"
+"PO-Revision-Date: 2009-01-29 03:27-0500\n"
+"Last-Translator: Li-An <lian00@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;__ngettext_noop:1,2;_c\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-SearchPath-0: ."
+
+#: similarity.php:222
+msgid "Strong"
+msgstr "Fort"
+
+#: similarity.php:223
+msgid "Mild"
+msgstr "Moyen"
+
+#: similarity.php:224
+msgid "Weak"
+msgstr "Faible"
+
+#: similarity.php:225
+msgid "Tenuous"
+msgstr "Ténu"
+
+#: similarity.php:206
+msgid "Similarity Options"
+msgstr "Options de Similarity"
+
+#: similarity.php:206
+msgid "Similarity"
+msgstr "Similarity"
+
+#: similarity.php:215
+msgid "Unique Post"
+msgstr "Billet unique"
+
+#: similarity.php:254
+msgid "Options saved"
+msgstr "Options sauvegardées"
+
+#: similarity.php:262
+msgid " Options"
+msgstr " Options"
+
+#: similarity.php:263
+msgid "Help and Instructions"
+msgstr "Aide et instructions"
+
+#: similarity.php:268
+msgid "Number of posts to show"
+msgstr "Nombre de billets à lister"
+
+#: similarity.php:272
+msgid "Default display if no matches"
+msgstr "Affichage par défaut si il n'y a pas de correspondance"
+
+#: similarity.php:276
+msgid "Text and codes before the list"
+msgstr "Texte et codes avant la liste"
+
+#: similarity.php:280
+msgid "Text and codes after the list"
+msgstr "Texte et codes après la liste"
+
+#: similarity.php:284
+msgid "Display format for similarity strength"
+msgstr "Format d'affichage suivant la valeur de correspondance"
+
+#: similarity.php:286
+msgid "Visual"
+msgstr "Visuel"
+
+#: similarity.php:287
+msgid "Percent"
+msgstr "Pourcentage"
+
+#: similarity.php:288
+msgid "Text"
+msgstr "Texte"
+
+#: similarity.php:289
+msgid "Value"
+msgstr "Valeur"
+
+#: similarity.php:309
+msgid "Relative mixing weights"
+msgstr "Poids relatifs des paramètres de calcul"
+
+#: similarity.php:310
+msgid "Tags"
+msgstr "Tags"
+
+#: similarity.php:314
+msgid "Categories"
+msgstr "Catégories"
+
+#: similarity.php:317
+msgid "Output template"
+msgstr "Modèle d'affichage"
+
+#: similarity.php:318
+msgid "Valid template tags"
+msgstr "Modèles de tags utilisables"
+
+#: similarity.php:329
+msgid "Update"
+msgstr "Mise à jour"
+
+#: similarity.php:293
+msgid "Custom text for strength"
+msgstr "Personnaliser le texte traduisant l'importance de la correspondance"
+
+#: similarity.php:321
+msgid "Show one more random related post"
+msgstr "Afficher dans la liste un billet relatif aléatoire en plus"
+
+#: similarity.php:323
+msgid "Yes"
+msgstr "Oui"
+
+#: similarity.php:324
+msgid "No"
+msgstr "Non"
+
