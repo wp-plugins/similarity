@@ -3,13 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: similarity.php:245
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/similarity\n"
-"POT-Creation-Date: 2009-01-28 01:21+0000\n"
+"POT-Creation-Date: 2009-02-03 13:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,79 +16,124 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: similarity.php:167
-msgid "Similarity Options"
-msgstr ""
-
-#: similarity.php:167
-msgid "Similarity"
-msgstr ""
-
-#: similarity.php:175
-msgid "Unique Post"
-msgstr ""
-
-#: similarity.php:204
-msgid "Options saved"
-msgstr ""
-
-#: similarity.php:212
-msgid " Options"
-msgstr ""
-
-#: similarity.php:213
-msgid "Help and Instructions"
-msgstr ""
-
-#: similarity.php:218
-msgid "Number of posts to show"
-msgstr ""
-
-#: similarity.php:222
-msgid "Default display if no matches"
-msgstr ""
-
-#: similarity.php:226
-msgid "Text and codes before the list"
-msgstr ""
-
-#: similarity.php:230
-msgid "Text and codes after the list"
-msgstr ""
-
-#: similarity.php:234
-msgid "Display format for similarity strength"
-msgstr ""
-
-#: similarity.php:236
-msgid "Percent"
+#: similarity.php:95 similarity.php:99 similarity.php:101 similarity.php:103
+#: similarity.php:105 similarity.php:117 similarity.php:120
+msgid "RANDOM"
 msgstr ""
 
 #: similarity.php:237
-msgid "Value"
+msgid "Similarity Options"
 msgstr ""
 
-#: similarity.php:241
-msgid "Relative mixing weights"
-msgstr ""
-
-#: similarity.php:242
-msgid "Tags"
+#: similarity.php:237
+msgid "Similarity"
 msgstr ""
 
 #: similarity.php:246
-msgid "Categories"
+msgid "Unique Post"
 msgstr ""
 
-#: similarity.php:249
-msgid "Output template"
-msgstr ""
-
-#: similarity.php:250
-msgid "Valid template tags"
+#: similarity.php:253
+msgid "Strong"
 msgstr ""
 
 #: similarity.php:254
+msgid "Mild"
+msgstr ""
+
+#: similarity.php:255
+msgid "Weak"
+msgstr ""
+
+#: similarity.php:256
+msgid "Tenuous"
+msgstr ""
+
+#: similarity.php:285
+msgid "Options saved"
+msgstr ""
+
+#: similarity.php:293
+msgid " Options"
+msgstr ""
+
+#: similarity.php:294
+msgid "Help and Instructions"
+msgstr ""
+
+#: similarity.php:299
+msgid "Number of posts to show"
+msgstr ""
+
+#: similarity.php:303
+msgid "Default display if no matches"
+msgstr ""
+
+#: similarity.php:307
+msgid "Text and codes before the list"
+msgstr ""
+
+#: similarity.php:311
+msgid "Text and codes after the list"
+msgstr ""
+
+#: similarity.php:315
+msgid "Display format for similarity strength"
+msgstr ""
+
+#: similarity.php:317
+msgid "Visual"
+msgstr ""
+
+#: similarity.php:318
+msgid "Percent"
+msgstr ""
+
+#: similarity.php:319
+msgid "Text"
+msgstr ""
+
+#: similarity.php:320
+msgid "Value"
+msgstr ""
+
+#: similarity.php:324
+msgid "Custom text for strength"
+msgstr ""
+
+#: similarity.php:340
+msgid "Relative mixing weights"
+msgstr ""
+
+#: similarity.php:341
+msgid "Tags"
+msgstr ""
+
+#: similarity.php:345
+msgid "Categories"
+msgstr ""
+
+#: similarity.php:348
+msgid "Output template"
+msgstr ""
+
+#: similarity.php:349
+msgid "Valid template tags"
+msgstr ""
+
+#: similarity.php:352
+msgid "Show one more random related post"
+msgstr ""
+
+#: similarity.php:354
+msgid "Yes"
+msgstr ""
+
+#: similarity.php:355
+msgid "No"
+msgstr ""
+
+#: similarity.php:360
 msgid "Update"
 msgstr ""
 
