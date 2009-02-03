@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 1.5
+Version: 1.6
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -59,13 +59,13 @@ function print_similarity($list) {
 				break;  
 			case 'text':
 				if ($list[$i]['strength'] > 0.75) {
-					$list[$i]['strength'] = '<strong>'.__('Strong', 'similarity').'</strong>';
+					$list[$i]['strength'] = stripslashes($options['text_strong']);
 				} elseif ($list[$i]['strength'] > 0.5) {
-					$list[$i]['strength'] = __('Mild', 'similarity');
+					$list[$i]['strength'] = stripslashes($options['text_mild']);
 				} elseif ($list[$i]['strength'] > 0.25) {
-					$list[$i]['strength'] = __('Weak', 'similarity');
+					$list[$i]['strength'] = stripslashes($options['text_weak']);
 				} else {
-					$list[$i]['strength'] = '<em>'.__('Tenuous', 'similarity').'</em>';
+					$list[$i]['strength'] = stripslashes($options['text_tenuous']);
 				}
 				break;  
 			case 'color':
@@ -83,6 +83,44 @@ function print_similarity($list) {
 				break;
 			}
 			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
+			echo $impression;
+		}
+		if (($limit < sizeof($list)) && (stripslashes($options['one_extra']) == 'true')) {
+			srand ((double) microtime( )*1000000);
+			$i = rand($limit + 1,sizeof($list));
+			$post = get_post($list[$i]['post_id']);
+			switch ($format)
+			{
+			case 'percent':
+				$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . ($list[$i]['strength'] * 100) . '%';
+				break;  
+			case 'text':
+				if ($list[$i]['strength'] > 0.75) {
+					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_strong']);
+				} elseif ($list[$i]['strength'] > 0.5) {
+					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_mild']);
+				} elseif ($list[$i]['strength'] > 0.25) {
+					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_weak']);
+				} else {
+					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_tenuous']);
+				}
+				break;  
+			case 'color':
+				$r = 255;
+				$g = 255;
+				if ($list[$i]['strength'] > 0.5) {
+					$r = 255 * (.5 - ($list[$i]['strength'] - .5));
+				} elseif ($list[$i]['strength'] < 0.5) {
+					$g = 513 * $list[$i]['strength'];
+				}
+				$shade = 'rgb('.number_format($r).', '.number_format($g).', 0)';
+				$list[$i]['strength'] = '<span style="background-color: '.$shade.'; border: #000 1px solid">' . __('RANDOM', 'similarity') . '</span>';
+				break;
+			default:
+				$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . $list[$i]['strength'];
+				break;
+			}
+			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength']),str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
 			echo $impression;
 		}
 	}
@@ -110,11 +148,11 @@ function get_list($type = 'tag') {
 	if (count($results)) {
 		foreach ($results as $result) {
 			$potential += (1 / $result->rarity);
-			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID";
+			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID and object_id in (select ID from $wpdb->posts where post_status = 'publish'";
 			if ($wp_version > 2.5) {
-				$query .= " and object_id in (select ID from $wpdb->posts where post_parent = 0)";
+				$query .= " and post_parent = 0";
 			}
-			$query .= " order by remix";
+			$query .= ") order by remix";
 			$subsets = $wpdb->get_results($query);
 			if (count($subsets)) {
 				foreach ($subsets as $connection) {
@@ -212,6 +250,11 @@ $default_options['format'] = 'value';
 $default_options['output_template'] = '<li>{link} ({strength})</li>';
 $default_options['tag_weight'] = 1;
 $default_options['cat_weight'] = 1;
+$default_options['text_strong'] = '<strong>'.__('Strong', 'similarity').'</strong>';
+$default_options['text_mild'] = __('Mild', 'similarity');
+$default_options['text_weak'] = __('Weak', 'similarity');
+$default_options['text_tenuous'] = '<em>'.__('Tenuous', 'similarity').'</em>';
+$default_options['one_extra'] = 'false';
 // the plugin options are stored in the options table under the name of the plugin file sans extension
 add_option(basename(__FILE__, ".php"), $default_options, 'options for the Similarity plugin');
 
@@ -229,6 +272,11 @@ function options_page(){
 		$options['output_template'] = $_POST['output_template'];
 		$options['tag_weight'] = $_POST['tag_weight'];
 		$options['cat_weight'] = $_POST['cat_weight'];
+		$options['text_strong'] = $_POST['text_strong'];
+		$options['text_mild'] = $_POST['text_mild'];
+		$options['text_weak'] = $_POST['text_weak'];
+		$options['text_tenuous'] = $_POST['text_tenuous'];
+		$options['one_extra'] = $_POST['one_extra'];
 
 		// store the option values under the plugin filename
 		update_option(basename(__FILE__, ".php"), $options);
@@ -273,6 +321,22 @@ function options_page(){
 				</td>
 			</tr>
 			<tr valign="top">
+				<th scope="row" align="right"><?php _e('Custom text for strength', 'similarity') ?>:</th>
+				<td><input name="text_strong" type="text" id="text_strong" value="<?php echo htmlspecialchars(stripslashes($options['text_strong'])); ?>" size="40" /> &gt;75%</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right">&nbsp;</th>
+				<td><input name="text_mild" type="text" id="text_mild" value="<?php echo htmlspecialchars(stripslashes($options['text_mild'])); ?>" size="40" /> 75% &gt; 50%</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right">&nbsp;</th>
+				<td><input name="text_weak" type="text" id="text_weak" value="<?php echo htmlspecialchars(stripslashes($options['text_weak'])); ?>" size="40" /> 50% &gt; 25%</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right">&nbsp;</th>
+				<td><input name="text_tenuous" type="text" id="text_tenuous" value="<?php echo htmlspecialchars(stripslashes($options['text_tenuous'])); ?>" size="40" /> &lt; 25%</td>
+			</tr>
+			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Relative mixing weights', 'similarity') ?>:</th>
 				<td><input name="tag_weight" type="text" id="tag_weight" value="<?php echo htmlspecialchars(stripslashes($options['tag_weight'])); ?>" size="40" /> <?php _e('Tags', 'similarity') ?></td>
 			</tr>
@@ -283,6 +347,13 @@ function options_page(){
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Output template', 'similarity') ?>:</th>
 				<td><textarea name="output_template" id="output_template" rows="4" cols="60"><?php echo htmlspecialchars(stripslashes($options['output_template'])); ?></textarea><br/><?php _e('Valid template tags', 'similarity') ?>:{link}, {strength}, {url}, {title}</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right"><?php _e('Show one more random related post', 'similarity') ?>:</th>
+				<td>
+					<input type="radio" name="one_extra" id="one_extra" value="true"<?php if ($options['one_extra'] == 'true') echo ' checked'; ?>><?php _e('Yes', 'similarity') ?></input>&nbsp;
+					<input type="radio" name="one_extra" id="one_extra" value="false"<?php if ($options['one_extra'] == 'false') echo ' checked'; ?>><?php _e('No', 'similarity') ?></input>&nbsp;
+				</td>
 			</tr>
 		</table>
 		</fieldset>
