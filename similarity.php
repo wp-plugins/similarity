@@ -120,7 +120,7 @@ function print_similarity($list) {
 				$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . $list[$i]['strength'];
 				break;
 			}
-			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength']),str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
+			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
 			echo $impression;
 		}
 	}
