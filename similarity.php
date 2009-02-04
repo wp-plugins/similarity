@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 1.6
+Version: 1.7
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -34,6 +34,7 @@ function sim_by_mix() {
 }
 
 function print_similarity($list) {
+	global $current_user;
 	$options = get_option(basename(__FILE__, ".php"));
 	$limit = stripslashes($options['limit']);
 	$none_text = stripslashes($options['none_text']);
@@ -47,81 +48,111 @@ function print_similarity($list) {
 	if (sizeof($list) < 1) {
 		echo $none_text;
 	} else {
-		if ($limit < 1 || $limit > sizeof($list)) {
+		if ($limit < 0 || $limit > sizeof($list)) {
 			$limit = sizeof($list);
 		}
 		for ($i = 0; $i < $limit; $i++) {
 			$post = get_post($list[$i]['post_id']);
-			switch ($format)
-			{
-			case 'percent':
-				$list[$i]['strength'] = ($list[$i]['strength'] * 100) . '%';
-				break;  
-			case 'text':
-				if ($list[$i]['strength'] > 0.75) {
-					$list[$i]['strength'] = stripslashes($options['text_strong']);
-				} elseif ($list[$i]['strength'] > 0.5) {
-					$list[$i]['strength'] = stripslashes($options['text_mild']);
-				} elseif ($list[$i]['strength'] > 0.25) {
-					$list[$i]['strength'] = stripslashes($options['text_weak']);
-				} else {
-					$list[$i]['strength'] = stripslashes($options['text_tenuous']);
+			if ($post->post_status == 'private') {
+				$show = 'false';
+				if (($current_user->ID == $post->post_author)
+				|| ($current_user->has_cap('read_private_posts')))  { // Author and those with capability
+					$show = 'true';
 				}
-				break;  
-			case 'color':
-				$r = 255;
-				$g = 255;
-				if ($list[$i]['strength'] > 0.5) {
-					$r = 255 * (.5 - ($list[$i]['strength'] - .5));
-				} elseif ($list[$i]['strength'] < 0.5) {
-					$g = 513 * $list[$i]['strength'];
-				}
-				$shade = 'rgb('.number_format($r).', '.number_format($g).', 0)';
-				$list[$i]['strength'] = '<span style="background-color: '.$shade.'; border: #000 1px solid">&nbsp;&nbsp;&nbsp;</span>';
-				break;
-			default:
-				break;
+			} else { // show non-private posts to anyone
+				$show = 'true';
 			}
-			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
-			echo $impression;
+			if ($show == 'true') {
+				switch ($format)
+				{
+				case 'percent':
+					$list[$i][' strength'] = ($list[$i]['strength'] * 100) . '%';
+					break;  
+				case 'text':
+					if ($list[$i]['strength'] > 0.75) {
+						$list[$i]['strength'] = stripslashes($options['text_strong']);
+					} elseif ($list[$i]['strength'] > 0.5) {
+						$list[$i]['strength'] = stripslashes($options['text_mild']);
+					} elseif ($list[$i]['strength'] > 0.25) {
+						$list[$i]['strength'] = stripslashes($options['text_weak']);
+					} else {
+						$list[$i]['strength'] = stripslashes($options['text_tenuous']);
+					}
+					break;  
+				case 'color':
+					$r = 255;
+					$g = 255;
+					if ($list[$i]['strength'] > 0.5) {
+						$r = 255 * (.5 - ($list[$i]['strength'] - .5));
+					} elseif ($list[$i]['strength'] < 0.5) {
+						$g = 513 * $list[$i]['strength'];
+					}
+					$shade = 'rgb('.number_format($r).', '.number_format($g).', 0)';
+					$list[$i]['strength'] = '<span style="background-color: '.$shade.'; border: #000 1px solid">&nbsp;&nbsp;&nbsp;</span>';
+					break;
+				default:
+					break;
+				}
+				$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
+				echo $impression;
+			} else {
+				if ($limit < sizeof($list)) {
+					$limit++;
+				}
+			}
 		}
 		if (($limit < sizeof($list)) && (stripslashes($options['one_extra']) == 'true')) {
-			srand ((double) microtime( )*1000000);
-			$i = rand($limit + 1,sizeof($list));
-			$post = get_post($list[$i]['post_id']);
-			switch ($format)
-			{
-			case 'percent':
-				$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . ($list[$i]['strength'] * 100) . '%';
-				break;  
-			case 'text':
-				if ($list[$i]['strength'] > 0.75) {
-					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_strong']);
-				} elseif ($list[$i]['strength'] > 0.5) {
-					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_mild']);
-				} elseif ($list[$i]['strength'] > 0.25) {
-					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_weak']);
-				} else {
-					$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_tenuous']);
+			$show = 'false';
+			$try = 0;
+			while (($show =='false') && ($try < 100)) {
+				srand ((double) microtime( )*1000000);
+				$i = rand($limit + 1,sizeof($list));
+				$post = get_post($list[$i]['post_id']);
+				if ($post->post_status == 'private') {
+					$show = 'false';
+					if (($current_user->ID == $post->post_author)
+					|| ($current_user->has_cap('read_private_posts')))  { // Author and those with capability
+						$show = 'true';
+					}
+				} else { // show non-private posts to anyone
+					$show = 'true';
 				}
-				break;  
-			case 'color':
-				$r = 255;
-				$g = 255;
-				if ($list[$i]['strength'] > 0.5) {
-					$r = 255 * (.5 - ($list[$i]['strength'] - .5));
-				} elseif ($list[$i]['strength'] < 0.5) {
-					$g = 513 * $list[$i]['strength'];
-				}
-				$shade = 'rgb('.number_format($r).', '.number_format($g).', 0)';
-				$list[$i]['strength'] = '<span style="background-color: '.$shade.'; border: #000 1px solid">' . __('RANDOM', 'similarity') . '</span>';
-				break;
-			default:
-				$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . $list[$i]['strength'];
-				break;
+				if ($show == 'true') {
+					switch ($format)
+					{
+					case 'percent':
+						$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . ($list[$i]['strength'] * 100) . '%';
+						break;  
+					case 'text':
+						if ($list[$i]['strength'] > 0.75) {
+							$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_strong']);
+						} elseif ($list[$i]['strength'] > 0.5) {
+							$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_mild']);
+						} elseif ($list[$i]['strength'] > 0.25) {
+							$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_weak']);
+						} else {
+							$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . stripslashes($options['text_tenuous']);
+						}
+						break;  
+					case 'color':
+						$r = 255;
+						$g = 255;
+						if ($list[$i]['strength'] > 0.5) {
+							$r = 255 * (.5 - ($list[$i]['strength'] - .5));
+						} elseif ($list[$i]['strength'] < 0.5) {
+							$g = 513 * $list[$i]['strength'];
+						}
+						$shade = 'rgb('.number_format($r).', '.number_format($g).', 0)';
+						$list[$i]['strength'] = '<span style="background-color: '.$shade.'; border: #000 1px solid">' . __('RANDOM', 'similarity') . '</span>';
+						break;
+					default:
+						$list[$i]['strength'] = __('RANDOM', 'similarity') . ' - ' . $list[$i]['strength'];
+						break;
+					}
+					$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
+					echo $impression;
+				} else { $try++; }
 			}
-			$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
-			echo $impression;
 		}
 	}
 	echo $suffix;
@@ -148,11 +179,11 @@ function get_list($type = 'tag') {
 	if (count($results)) {
 		foreach ($results as $result) {
 			$potential += (1 / $result->rarity);
-			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID and object_id in (select ID from $wpdb->posts where post_status = 'publish'";
+			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID";
 			if ($wp_version > 2.5) {
-				$query .= " and post_parent = 0";
+				$query .= " and object_id in (select ID from $wpdb->posts where post_parent = 0)";
 			}
-			$query .= ") order by remix";
+			$query .= " order by remix";
 			$subsets = $wpdb->get_results($query);
 			if (count($subsets)) {
 				foreach ($subsets as $connection) {
@@ -197,6 +228,7 @@ function mix_lists($taglist, $catlist) {
 		array_push($strength_list,($tagweight * $taglist[0]['strength']));
 		array_shift($taglist);
 	}
+
 	while(sizeof($catlist) > 0) {
 		if (!array_search($catlist[0]['post_id'],$id_list)) {
 			if ($id_list[0] == $catlist[0]['post_id']) {
@@ -215,7 +247,9 @@ function mix_lists($taglist, $catlist) {
 		array_multisort($strength_list,SORT_DESC,$id_list);
 	}
 	while(sizeof($id_list) > 0) {
-		$set = array("post_id"=>array_shift($id_list), "strength"=>number_format((array_shift($strength_list) / ($tagweight + $catweight)),3));
+		$set = array("post_id"=>array_shift($id_list), "strength"=>number_format((array_shift($strength_list) / ($tagweight + 
+
+$catweight)),3));
 		array_push($list,$set);
 	}
 	return $list;
@@ -300,6 +334,7 @@ function options_page(){
 				<td><input name="limit" type="text" id="limit" value="<?php echo $options['limit']; ?>" size="2" /></td>
 			</tr>
 			<tr valign="top">
+
 				<th scope="row" align="right"><?php _e('Default display if no matches', 'similarity') ?>:</th>
 				<td><input name="none_text" type="text" id="none_text" value="<?php echo htmlspecialchars(stripslashes($options['none_text'])); ?>" size="40" /></td>
 			</tr>
