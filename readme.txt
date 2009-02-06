@@ -5,12 +5,12 @@ Requires at least: 2.3
 Tested up to: 2.7
 Stable tag: trunk
 
-Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both. Thank you to Li-An (http://li-an.fr/blog/) for providing the french translation included here.
+Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both.
 
 == Description ==
 Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both. The display of the list is fully customizable including the ability to display the strength of the similarity as a value, percentage, color, or custom text/code. Another option allows for a less related post to be randomly selected and appended to the list.
 
-This plugin is translation ready and comes with English (U.S.) and French translations.
+This plugin is translation ready and comes with English (U.S.) and French translations. Thank you to Li-An (http://li-an.fr/blog/) for providing the french translation included here.
 
 Prior to Version 1.6 private posts would potentially show in the list of related posts. In 1.6 these were skipped. As of version 1.7 private posts will show for the post author or others with the ability to read private posts. It is strongly recommended that users who have private posts install version 1.6 or higher.
 
@@ -29,7 +29,7 @@ Options include:
     o {url} is the permalink for the related post
     o {title} is the title for the related post
 
-The plugin allows for three function calls anywhere in your page templates (both use the same options):
+The plugin allows for three function calls anywhere in your page templates (all use the same options):
 
 * `<?php sim_by_tag(); ?>` - determines similarity based on the tags applied to the posts
 * `<?php sim_by_cat(); ?>` - determines similarity based on the categories assigned to the posts
