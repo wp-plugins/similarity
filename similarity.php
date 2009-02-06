@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Similarity
-Plugin URI: http://www.davidjmiller.org/similarity/
+Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
 Version: 1.7
 Author: David Miller
