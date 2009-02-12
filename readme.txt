@@ -43,7 +43,7 @@ To install it simply unzip the file linked above and save it in your plugins dir
 
 = Can I mix tags and categories? =
 
-As of version 1.3 the plugin allows for similarity to be calculated on a combination of tags and plugins. You can also use the `sim_by_tag();` and `sim_by_cat();` commands together to generate different lists of related posts.
+As of version 1.3 the plugin allows for similarity to be calculated on a combination of tags and plugins using the `sim_by_mix();` command. You can also use the `sim_by_tag();` and `sim_by_cat();` commands together to generate different lists of related posts.
 
 == Screenshots ==
 
