@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 1.7
+Version: 1.8
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -177,13 +177,14 @@ function get_list($type = 'tag') {
 	$query .= "' and count > 1) and t.term_taxonomy_id = r.term_taxonomy_id order by t.count, mix";
 	$results = $wpdb->get_results($query);
 	if (count($results)) {
+		$now = gmdate("Y-m-d H:i:s",(time()+($time_difference*3600)));
 		foreach ($results as $result) {
 			$potential += (1 / $result->rarity);
-			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID";
+			$query = "select object_id as ID, rand() as remix from $wpdb->term_relationships where term_taxonomy_id = $result->ttid and object_id != $post->ID and object_id in (select ID from $wpdb->posts where post_date <= '$now'";
 			if ($wp_version > 2.5) {
-				$query .= " and object_id in (select ID from $wpdb->posts where post_parent = 0)";
+				$query .= " and post_parent = 0";
 			}
-			$query .= " order by remix";
+			$query .= ") order by remix";
 			$subsets = $wpdb->get_results($query);
 			if (count($subsets)) {
 				foreach ($subsets as $connection) {
