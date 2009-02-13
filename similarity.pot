@@ -142,7 +142,7 @@ msgid "Similarity"
 msgstr ""
 
 #. Plugin URI of an extension
-msgid "http://www.davidjmiller.org/similarity/"
+msgid "http://www.davidjmiller.org/2008/similarity/"
 msgstr ""
 
 #. Description of an extension
