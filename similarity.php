@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 1.8
+Version: 1.9
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -21,16 +21,19 @@ load_plugin_textdomain('similarity', 'wp-content/plugins/similarity');
 function sim_by_tag() {
 	$list = get_list("tag");
 	print_similarity($list);
+	echo '<!-- Similarity - Sim_by_Tag -->';
 }
 function sim_by_cat() {
 	$list = get_list("cat");
 	print_similarity($list);
+	echo '<!-- Similarity - Sim_by_Cat -->';
 }
 function sim_by_mix() {
 	$taglist = get_list("tag");
 	$catlist = get_list("cat");
 	$list = mix_lists($taglist, $catlist);
 	print_similarity($list);
+	echo '<!-- Similarity - Sim_by_Mix -->';
 }
 
 function print_similarity($list) {
@@ -51,16 +54,29 @@ function print_similarity($list) {
 		if ($limit < 0 || $limit > sizeof($list)) {
 			$limit = sizeof($list);
 		}
+		$returnable = 'false';
 		for ($i = 0; $i < $limit; $i++) {
 			$post = get_post($list[$i]['post_id']);
-			if ($post->post_status == 'private') {
+			switch ($post->post_status) {
+			case 'private':
 				$show = 'false';
 				if (($current_user->ID == $post->post_author)
 				|| ($current_user->has_cap('read_private_posts')))  { // Author and those with capability
 					$show = 'true';
+					$returnable = 'true';
 				}
-			} else { // show non-private posts to anyone
+				break;
+			case 'draft':
+				$show = 'false';
+				if ($current_user->ID == $post->post_author) { // Author only
+					$show = 'true';
+					$returnable = 'true';
+				}
+				break;
+			default: // show non-private posts to anyone
 				$show = 'true';
+				$returnable = 'true';
+				break;
 			}
 			if ($show == 'true') {
 				switch ($format)
@@ -101,21 +117,33 @@ function print_similarity($list) {
 				}
 			}
 		}
-		if (($limit < sizeof($list)) && (stripslashes($options['one_extra']) == 'true')) {
+		if ($returnable == 'false') {
+			echo $none_text;
+		} else if (($limit < sizeof($list)) && (stripslashes($options['one_extra']) == 'true')) {
 			$show = 'false';
 			$try = 0;
 			while (($show =='false') && ($try < 100)) {
 				srand ((double) microtime( )*1000000);
 				$i = rand($limit + 1,sizeof($list));
 				$post = get_post($list[$i]['post_id']);
-				if ($post->post_status == 'private') {
+				switch ($post->post_status) {
+				case 'private':
 					$show = 'false';
 					if (($current_user->ID == $post->post_author)
-					|| ($current_user->has_cap('read_private_posts')))  { // Author and those with capability
+					|| ($current_user->has_cap('read_private_posts')))  {
 						$show = 'true';
 					}
-				} else { // show non-private posts to anyone
+					break;
+				case 'draft':
+					$show = 'false';
+					if ($current_user->ID == $post->post_author) {
+						$show = 'false';
+						$returnable = 'true';
+					}
+					break;
+				default: // show non-private posts to anyone
 					$show = 'true';
+					break;
 				}
 				if ($show == 'true') {
 					switch ($format)
@@ -154,6 +182,7 @@ function print_similarity($list) {
 				} else { $try++; }
 			}
 		}
+
 	}
 	echo $suffix;
 }
