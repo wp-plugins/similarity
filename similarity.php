@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 1.9
+Version: 2.0
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -66,12 +66,15 @@ function print_similarity($list) {
 					$returnable = 'true';
 				}
 				break;
-			case 'draft':
+			case 'draft': //unpublished posts
 				$show = 'false';
 				if ($current_user->ID == $post->post_author) { // Author only
 					$show = 'true';
 					$returnable = 'true';
 				}
+				break;
+			case 'inherit': //non-posts (such as images) picked up by the query (who knew)
+				$show = 'false';
 				break;
 			default: // show non-private posts to anyone
 				$show = 'true';
@@ -110,7 +113,7 @@ function print_similarity($list) {
 					break;
 				}
 				$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
-				echo $impression;
+				echo $impression . '<!-- ' . $post->post_status . ' -->';
 			} else {
 				if ($limit < sizeof($list)) {
 					$limit++;
@@ -140,6 +143,9 @@ function print_similarity($list) {
 						$show = 'false';
 						$returnable = 'true';
 					}
+					break;
+				case 'inherit':
+					$show = 'false';
 					break;
 				default: // show non-private posts to anyone
 					$show = 'true';
