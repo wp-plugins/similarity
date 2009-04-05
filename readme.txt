@@ -8,7 +8,7 @@ Stable tag: trunk
 Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both.
 
 == Description ==
-Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both. The display of the list is fully customizable including the ability to display the strength of the similarity as a value, percentage, color, or custom text/code. Another option allows for a less related post to be randomly selected and appended to the list.
+Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both. The display of the list is fully customizable including the ability to display the strength of the similarity as a value, percentage, color, or custom text/code. Another option allows for a less related post to be randomly selected and appended to the list. The list can be limited by one or both of a numerical limit or (as of version 2.1) match strength.
 
 This plugin is translation ready and comes with English (U.S.) and French translations. Thank you to Li-An (http://li-an.fr/blog/) for providing the french translation included here.
 
@@ -30,6 +30,10 @@ To install it simply unzip the file linked above and save it in your plugins dir
 
 As of version 1.3 the plugin allows for similarity to be calculated on a combination of tags and plugins using the `sim_by_mix();` command. You can also use the `sim_by_tag();` and `sim_by_cat();` commands together to generate different lists of related posts.
 
+= Why does my list include matches weaker than the match strength I chose? =
+
+If you use the 'Show one more random related post' option the last item in the list is random and does nto consider minimum strength limitations. If you wish to strictly enforce the minimum strength you may not display a random list item.
+
 == Screenshots ==
 
-1. This is a sample options page displayed in Wordpress 2.7
+1. This is a sample options page displayed in Wordpress 2.7.1

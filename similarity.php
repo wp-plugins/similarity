@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.0
+Version: 2.1
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -44,6 +44,7 @@ function print_similarity($list) {
 	$prefix = stripslashes($options['prefix']);
 	$suffix = stripslashes($options['suffix']);
 	$format = stripslashes($options['format']);
+	$minimum_strength = stripslashes($options['minimum_strength']);
 	$output_template = stripslashes($options['output_template']);
 	// an empty output_template makes no sense so we fall back to the default
 	if ($output_template == '') $output_template = '<li>{link} ({strength})</li>';
@@ -56,67 +57,72 @@ function print_similarity($list) {
 		}
 		$returnable = 'false';
 		for ($i = 0; $i < $limit; $i++) {
-			$post = get_post($list[$i]['post_id']);
-			switch ($post->post_status) {
-			case 'private':
-				$show = 'false';
-				if (($current_user->ID == $post->post_author)
-				|| ($current_user->has_cap('read_private_posts')))  { // Author and those with capability
-					$show = 'true';
-					$returnable = 'true';
-				}
-				break;
-			case 'draft': //unpublished posts
-				$show = 'false';
-				if ($current_user->ID == $post->post_author) { // Author only
-					$show = 'true';
-					$returnable = 'true';
-				}
-				break;
-			case 'inherit': //non-posts (such as images) picked up by the query (who knew)
-				$show = 'false';
-				break;
-			default: // show non-private posts to anyone
-				$show = 'true';
+			if ($minimum_strength > $list[$i]['strength']) {
 				$returnable = 'true';
-				break;
-			}
-			if ($show == 'true') {
-				switch ($format)
-				{
-				case 'percent':
-					$list[$i][' strength'] = ($list[$i]['strength'] * 100) . '%';
-					break;  
-				case 'text':
-					if ($list[$i]['strength'] > 0.75) {
-						$list[$i]['strength'] = stripslashes($options['text_strong']);
-					} elseif ($list[$i]['strength'] > 0.5) {
-						$list[$i]['strength'] = stripslashes($options['text_mild']);
-					} elseif ($list[$i]['strength'] > 0.25) {
-						$list[$i]['strength'] = stripslashes($options['text_weak']);
-					} else {
-						$list[$i]['strength'] = stripslashes($options['text_tenuous']);
+				$i = $limit;
+			} else {
+				$post = get_post($list[$i]['post_id']);
+				switch ($post->post_status) {
+				case 'private':
+					$show = 'false';
+					if (($current_user->ID == $post->post_author)
+					|| ($current_user->has_cap('read_private_posts')))  { // Author and those with capability
+						$show = 'true';
+						$returnable = 'true';
 					}
-					break;  
-				case 'color':
-					$r = 255;
-					$g = 255;
-					if ($list[$i]['strength'] > 0.5) {
-						$r = 255 * (.5 - ($list[$i]['strength'] - .5));
-					} elseif ($list[$i]['strength'] < 0.5) {
-						$g = 513 * $list[$i]['strength'];
-					}
-					$shade = 'rgb('.number_format($r).', '.number_format($g).', 0)';
-					$list[$i]['strength'] = '<span style="background-color: '.$shade.'; border: #000 1px solid">&nbsp;&nbsp;&nbsp;</span>';
 					break;
-				default:
+				case 'draft': //unpublished posts
+					$show = 'false';
+					if ($current_user->ID == $post->post_author) { // Author only
+						$show = 'true';
+						$returnable = 'true';
+					}
+					break;
+				case 'inherit': //non-posts (such as images) picked up by the query (who knew)
+					$show = 'false';
+					break;
+				default: // show non-private posts to anyone
+					$show = 'true';
+					$returnable = 'true';
 					break;
 				}
-				$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
-				echo $impression . '<!-- ' . $post->post_status . ' -->';
-			} else {
-				if ($limit < sizeof($list)) {
-					$limit++;
+				if ($show == 'true') {
+					switch ($format)
+					{
+					case 'percent':
+						$list[$i][' strength'] = ($list[$i]['strength'] * 100) . '%';
+						break;  
+					case 'text':
+						if ($list[$i]['strength'] > 0.75) {
+							$list[$i]['strength'] = stripslashes($options['text_strong']);
+						} elseif ($list[$i]['strength'] > 0.5) {
+							$list[$i]['strength'] = stripslashes($options['text_mild']);
+						} elseif ($list[$i]['strength'] > 0.25) {
+							$list[$i]['strength'] = stripslashes($options['text_weak']);
+						} else {
+							$list[$i]['strength'] = stripslashes($options['text_tenuous']);
+						}
+						break;  
+					case 'color':
+						$r = 255;
+						$g = 255;
+						if ($list[$i]['strength'] > 0.5) {
+							$r = 255 * (.5 - ($list[$i]['strength'] - .5));
+						} elseif ($list[$i]['strength'] < 0.5) {
+							$g = 513 * $list[$i]['strength'];
+						}
+						$shade = 'rgb('.number_format($r).', '.number_format($g).', 0)';
+						$list[$i]['strength'] = '<span style="background-color: '.$shade.'; border: #000 1px solid">&nbsp;&nbsp;&nbsp;</span>';
+						break;
+					default:
+						break;
+					}
+					$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
+					echo $impression . '<!-- ' . $post->post_status . ' -->';
+				} else {
+					if ($limit < sizeof($list)) {
+						$limit++;
+					}
 				}
 			}
 		}
@@ -347,6 +353,11 @@ function options_page(){
 		$options['text_weak'] = $_POST['text_weak'];
 		$options['text_tenuous'] = $_POST['text_tenuous'];
 		$options['one_extra'] = $_POST['one_extra'];
+		if ((floatval($_POST['minimum_strength']) < 0) || (floatval($_POST['minimum_strength']) > 1)) {
+			$options['minimum_strength'] = 0;
+		} else {
+			$options['minimum_strength'] = floatval($_POST['minimum_strength']);
+		}
 
 		// store the option values under the plugin filename
 		update_option(basename(__FILE__, ".php"), $options);
@@ -368,6 +379,10 @@ function options_page(){
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Number of posts to show', 'similarity') ?>:</th>
 				<td><input name="limit" type="text" id="limit" value="<?php echo $options['limit']; ?>" size="2" /></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right"><?php _e('Minimum match strength', 'similarity') ?>:</th>
+				<td><input name="minimum_strength" type="text" id="minimum_strength" value="<?php echo $options['minimum_strength']; ?>" size="5" /> <?php _e('(Any number between .00 and 1 with 1 being a perfect match.)', 'similarity') ?></td>
 			</tr>
 			<tr valign="top">
 
