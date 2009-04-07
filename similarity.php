@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.1
+Version: 2.2
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -45,6 +45,7 @@ function print_similarity($list) {
 	$suffix = stripslashes($options['suffix']);
 	$format = stripslashes($options['format']);
 	$minimum_strength = stripslashes($options['minimum_strength']);
+	$random_min = stripslashes($options['random_min']);
 	$output_template = stripslashes($options['output_template']);
 	// an empty output_template makes no sense so we fall back to the default
 	if ($output_template == '') $output_template = '<li>{link} ({strength})</li>';
@@ -154,7 +155,11 @@ function print_similarity($list) {
 					$show = 'false';
 					break;
 				default: // show non-private posts to anyone
-					$show = 'true';
+					if ($random_min > $list[$i]['strength']) {
+						$show = 'true';
+					} else {
+						$show = 'false';
+					}
 					break;
 				}
 				if ($show == 'true') {
@@ -358,6 +363,11 @@ function options_page(){
 		} else {
 			$options['minimum_strength'] = floatval($_POST['minimum_strength']);
 		}
+		if ((floatval($_POST['random_min']) < 0) || (floatval($_POST['random_min']) > 1)) {
+			$options['random_min'] = $options['minimum_strength'];
+		} else {
+			$options['random_min'] = floatval($_POST['random_min']);
+		}
 
 		// store the option values under the plugin filename
 		update_option(basename(__FILE__, ".php"), $options);
@@ -439,7 +449,8 @@ function options_page(){
 				<td>
 					<input type="radio" name="one_extra" id="one_extra" value="true"<?php if ($options['one_extra'] == 'true') echo ' checked'; ?>><?php _e('Yes', 'similarity') ?></input>&nbsp;
 					<input type="radio" name="one_extra" id="one_extra" value="false"<?php if ($options['one_extra'] == 'false') echo ' checked'; ?>><?php _e('No', 'similarity') ?></input>&nbsp;
-				</td>
+					<strong><?php _e('Minimum match strength', 'similarity') ?></strong><?php _e(' (optional)', 'similarity') ?>:&nbsp; 
+					<input name="random_min" type="text" id="random_min" value="<?php echo $options['random_min']; ?>" size="5" />				</td>
 			</tr>
 		</table>
 		</fieldset>

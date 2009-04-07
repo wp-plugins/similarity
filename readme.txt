@@ -28,11 +28,11 @@ To install it simply unzip the file linked above and save it in your plugins dir
 
 = Can I mix tags and categories? =
 
-As of version 1.3 the plugin allows for similarity to be calculated on a combination of tags and plugins using the `sim_by_mix();` command. You can also use the `sim_by_tag();` and `sim_by_cat();` commands together to generate different lists of related posts.
+As of version 1.3 the plugin allows for similarity to be calculated on a combination of tags and plugins using the `sim_by_mix();` command. You can set the way the lists are combined using the relaive mixing weights. You can also use the `sim_by_tag();` and `sim_by_cat();` commands together to generate different lists of related posts.
 
 = Why does my list include matches weaker than the match strength I chose? =
 
-If you use the 'Show one more random related post' option the last item in the list is random and does nto consider minimum strength limitations. If you wish to strictly enforce the minimum strength you may not display a random list item.
+If you use the 'Show one more random related post' option the last item in the list is random and does not consider the standard minimum strength limitations. You can set a separate minimum strength level for the random post.
 
 == Screenshots ==
 
