@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.2
+Version: 2.2.1
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -91,7 +91,7 @@ function print_similarity($list) {
 					switch ($format)
 					{
 					case 'percent':
-						$list[$i][' strength'] = ($list[$i]['strength'] * 100) . '%';
+						$list[$i]['strength'] = ($list[$i]['strength'] * 100) . '%';
 						break;  
 					case 'text':
 						if ($list[$i]['strength'] > 0.75) {
@@ -141,21 +141,28 @@ function print_similarity($list) {
 					$show = 'false';
 					if (($current_user->ID == $post->post_author)
 					|| ($current_user->has_cap('read_private_posts')))  {
-						$show = 'true';
+						if ($random_min < $list[$i]['strength']) {
+							$show = 'true';
+						} else {
+							$show = 'false';
+						}
 					}
 					break;
 				case 'draft':
 					$show = 'false';
 					if ($current_user->ID == $post->post_author) {
-						$show = 'false';
-						$returnable = 'true';
+						if ($random_min < $list[$i]['strength']) {
+							$show = 'true';
+						} else {
+							$show = 'false';
+						}
 					}
 					break;
 				case 'inherit':
 					$show = 'false';
 					break;
 				default: // show non-private posts to anyone
-					if ($random_min > $list[$i]['strength']) {
+					if ($random_min < $list[$i]['strength']) {
 						$show = 'true';
 					} else {
 						$show = 'false';
