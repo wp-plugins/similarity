@@ -143,8 +143,6 @@ function print_similarity($list) {
 					|| ($current_user->has_cap('read_private_posts')))  {
 						if ($random_min < $list[$i]['strength']) {
 							$show = 'true';
-						} else {
-							$show = 'false';
 						}
 					}
 					break;
@@ -153,8 +151,6 @@ function print_similarity($list) {
 					if ($current_user->ID == $post->post_author) {
 						if ($random_min < $list[$i]['strength']) {
 							$show = 'true';
-						} else {
-							$show = 'false';
 						}
 					}
 					break;
