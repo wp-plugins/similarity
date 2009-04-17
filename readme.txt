@@ -10,7 +10,7 @@ Similarity displays a list of posts similar to the current post with similarity 
 == Description ==
 Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both. The display of the list is fully customizable including the ability to display the strength of the similarity as a value, percentage, color, or custom text/code. Another option allows for a less related post to be randomly selected and appended to the list. The list can be limited by one or both of a numerical limit or (as of version 2.1) match strength.
 
-This plugin is translation ready and comes with English (U.S.) and French translations. Thank you to Li-An (http://li-an.fr/blog/) for providing the french translation included here.
+This plugin is translation ready and comes with English (U.S.), French, and Polish translations. Thank you to Li-An (http://li-an.fr/blog/) for providing the French translation included here. Thank you to Krzysztof Kudlacik (http://born66.net/) for providing the Polish translation included here.
 
 Prior to Version 1.6 private posts would potentially show in the list of related posts. In 1.6 these were skipped. As of version 1.7 private posts will show for the post author or others with the ability to read private posts. It is strongly recommended that users who have private posts install version 1.6 or higher.
 
@@ -19,6 +19,7 @@ The plugin allows for three function calls anywhere in your page templates (all 
 * `<?php sim_by_tag(); ?>` - determines similarity based on the tags applied to the posts
 * `<?php sim_by_cat(); ?>` - determines similarity based on the categories assigned to the posts
 * `<?php sim_by_mix(); ?>` - determines similarity based on the tags and categories assigned to the posts
+* To display a Similarity list as a widget use a text widget with one of the following shortcodes - `[SIM-BY-TAG]` `[SIM-BY-CAT]` or `[SIM-BY-MIX]`
 
 == Installation ==
 
