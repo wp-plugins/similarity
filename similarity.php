@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.3
+Version: 2.5
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -38,6 +38,43 @@ function sim_by_mix() {
 	$list = mix_lists($taglist, $catlist);
 	print_similarity($list);
 	echo '<!-- Similarity - Sim_by_Mix -->';
+}
+
+function auto_display($content) {
+	global $wpdb, $post;
+	$options = get_option(basename(__FILE__, ".php"));
+	$adf = stripslashes($options['adf']);
+	if (is_feed() or $adf == 'none')
+		return $content;
+	elseif (is_single() and $adf != 'none')
+		switch ($adf) {
+		case 'tag':
+			return $content.sim_by_tag();
+			break;
+		case 'cat':
+			return $content.sim_by_cat();
+			break;
+		case 'mix':
+			return $content.sim_by_mix();
+			break;
+		default:
+			return $content;
+		}
+	else
+		return $content;
+}
+
+function short_tag() {
+	global $wpdb, $post;
+	if (is_single()) sim_by_tag();
+}
+function short_cat() {
+	global $wpdb, $post;
+	if (is_single()) sim_by_cat();
+}
+function short_mix() {
+	global $wpdb, $post;
+	if (is_single()) sim_by_mix();
 }
 
 function print_similarity($list) {
@@ -375,6 +412,7 @@ function options_page(){
 		} else {
 			$options['random_min'] = floatval($_POST['random_min']);
 		}
+		$options['adf'] = $_POST['adf'];
 
 		// store the option values under the plugin filename
 		update_option(basename(__FILE__, ".php"), $options);
@@ -459,6 +497,15 @@ function options_page(){
 					<strong><?php _e('Minimum match strength', 'similarity') ?></strong><?php _e(' (optional)', 'similarity') ?>:&nbsp; 
 					<input name="random_min" type="text" id="random_min" value="<?php echo $options['random_min']; ?>" size="5" />				</td>
 			</tr>
+			<tr valign="top">
+				<th scope="row" align="right"><?php _e('Auto-display list from function', 'similarity') ?>:</th>
+				<td>
+					<input type="radio" name="adf" id="adf" value="none"<?php if ($options['adf'] == 'none') echo ' checked'; ?>><?php _e('None', 'similarity') ?></input>&nbsp;
+					<input type="radio" name="adf" id="adf" value="tag"<?php if ($options['adf'] == 'tag') echo ' checked'; ?>>sim_by_tag</input>&nbsp;
+					<input type="radio" name="adf" id="adf" value="cat"<?php if ($options['adf'] == 'cat') echo ' checked'; ?>>sim_by_cat</input>&nbsp;
+					<input type="radio" name="adf" id="adf" value="mix"<?php if ($options['adf'] == 'mix') echo ' checked'; ?>>sim_by_mix</input>
+				</td>
+			</tr>
 		</table>
 		</fieldset>
 		<div class="submit"><input type="submit" name="update_options" value="<?php _e('Update', 'similarity') ?>"  style="font-weight:bold;" /></div>
@@ -468,8 +515,8 @@ function options_page(){
 }
 
 $options = get_option(basename(__FILE__, ".php"));
-add_shortcode('SIM-BY-TAG', 'sim_by_tag');
-add_shortcode('SIM-BY-CAT', 'sim_by_cat');
-add_shortcode('SIM-BY-MIX', 'sim_by_mix');
-
+add_shortcode('SIM-BY-TAG', 'short_tag');
+add_shortcode('SIM-BY-CAT', 'short_cat');
+add_shortcode('SIM-BY-MIX', 'short_mix');
+add_filter('the_content','auto_display',1200);
 ?>

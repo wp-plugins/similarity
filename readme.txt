@@ -20,7 +20,7 @@ The plugin allows for three function calls anywhere in your page templates (all 
 * `<?php sim_by_cat(); ?>` - determines similarity based on the categories assigned to the posts
 * `<?php sim_by_mix(); ?>` - determines similarity based on the tags and categories assigned to the posts
 * To display a Similarity list as a widget use a text widget with one of the following shortcodes - `[SIM-BY-TAG]` `[SIM-BY-CAT]` or `[SIM-BY-MIX]`
-
+* To display a Similarity list without altering your templates simply select the function that you would like to auto-display at the bottom of the options page.
 == Installation ==
 
 To install it simply unzip the file linked above and save it in your plugins directory under wp-content. In the plugin manager activate the plugin. Settings for the plugin may be altered under the Similarity page of the Options menu (version 2.3) or Settings menu (version 2.5 or later).
