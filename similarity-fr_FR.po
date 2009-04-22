@@ -14,142 +14,150 @@ msgstr ""
 "X-Poedit-Basepath: \n"
 "X-Poedit-SearchPath-0: ."
 
-#: similarity.php:334
+#: similarity.php:378
 msgid "Strong"
 msgstr "Fort"
 
-#: similarity.php:335
+#: similarity.php:379
 msgid "Mild"
 msgstr "Moyen"
 
-#: similarity.php:336
+#: similarity.php:380
 msgid "Weak"
 msgstr "Faible"
 
-#: similarity.php:337
+#: similarity.php:381
 msgid "Tenuous"
 msgstr "Ténu"
 
-#: similarity.php:318
+#: similarity.php:362
 msgid "Similarity Options"
 msgstr "Options de Similarity"
 
-#: similarity.php:318
+#: similarity.php:362
 msgid "Similarity"
 msgstr "Similarity"
 
-#: similarity.php:327
+#: similarity.php:371
 msgid "Unique Post"
 msgstr "Billet unique"
 
-#: similarity.php:376
+#: similarity.php:421
 msgid "Options saved"
 msgstr "Options sauvegardées"
 
-#: similarity.php:384
+#: similarity.php:429
 msgid " Options"
 msgstr " Options"
 
-#: similarity.php:385
+#: similarity.php:430
 msgid "Help and Instructions"
 msgstr "Aide et instructions"
 
-#: similarity.php:390
+#: similarity.php:435
 msgid "Number of posts to show"
 msgstr "Nombre de billets à lister"
 
-#: similarity.php:399
+#: similarity.php:444
 msgid "Default display if no matches"
 msgstr "Affichage par défaut si il n'y a pas de correspondance"
 
-#: similarity.php:403
+#: similarity.php:448
 msgid "Text and codes before the list"
 msgstr "Texte et codes avant la liste"
 
-#: similarity.php:407
+#: similarity.php:452
 msgid "Text and codes after the list"
 msgstr "Texte et codes après la liste"
 
-#: similarity.php:411
+#: similarity.php:456
 msgid "Display format for similarity strength"
 msgstr "Format d'affichage suivant la valeur de correspondance"
 
-#: similarity.php:413
+#: similarity.php:458
 msgid "Visual"
 msgstr "Visuel"
 
-#: similarity.php:414
+#: similarity.php:459
 msgid "Percent"
 msgstr "Pourcentage"
 
-#: similarity.php:415
+#: similarity.php:460
 msgid "Text"
 msgstr "Texte"
 
-#: similarity.php:416
+#: similarity.php:461
 msgid "Value"
 msgstr "Valeur"
 
-#: similarity.php:436
+#: similarity.php:481
 msgid "Relative mixing weights"
 msgstr "Poids relatifs des paramètres de calcul"
 
-#: similarity.php:437
+#: similarity.php:482
 msgid "Tags"
 msgstr "Tags"
 
-#: similarity.php:441
+#: similarity.php:486
 msgid "Categories"
 msgstr "Catégories"
 
-#: similarity.php:444
+#: similarity.php:489
 msgid "Output template"
 msgstr "Modèle d'affichage"
 
-#: similarity.php:445
+#: similarity.php:490
 msgid "Valid template tags"
 msgstr "Modèles de tags utilisables"
 
-#: similarity.php:457
+#: similarity.php:511
 msgid "Update"
 msgstr "Mise à jour"
 
-#: similarity.php:420
+#: similarity.php:465
 msgid "Custom text for strength"
 msgstr "Personnaliser le texte traduisant l'importance de la correspondance"
 
-#: similarity.php:448
+#: similarity.php:493
 msgid "Show one more random related post"
 msgstr "Afficher dans la liste un billet relatif aléatoire en plus"
 
-#: similarity.php:450
+#: similarity.php:495
 msgid "Yes"
 msgstr "Oui"
 
-#: similarity.php:451
+#: similarity.php:496
 msgid "No"
 msgstr "Non"
 
-#: similarity.php:169
-#: similarity.php:173
-#: similarity.php:175
-#: similarity.php:177
-#: similarity.php:179
-#: similarity.php:191
-#: similarity.php:194
+#: similarity.php:213
+#: similarity.php:217
+#: similarity.php:219
+#: similarity.php:221
+#: similarity.php:223
+#: similarity.php:235
+#: similarity.php:238
 msgid "RANDOM"
 msgstr "au hasard"
 
-#: similarity.php:394
-#: similarity.php:452
+#: similarity.php:439
+#: similarity.php:497
 msgid "Minimum match strength"
 msgstr "Correspondance minimum"
 
-#: similarity.php:395
+#: similarity.php:440
 msgid "(Any number between .00 and 1 with 1 being a perfect match.)"
 msgstr "(n'importe quel nombre entre .00 et 1 sachant que 1 est associé à une correspondance parfaite)"
 
-#: similarity.php:452
+#: similarity.php:497
 msgid " (optional)"
 msgstr "(optionnel)"
+
+#: similarity.php:501
+msgid "Auto-display list from function"
+msgstr "Afficher automatiquement la liste à partir de la fonction"
+
+#: similarity.php:503
+msgid "None"
+msgstr "Aucune"
 
