@@ -160,7 +160,7 @@ function print_similarity($list) {
 						break;
 					}
 					$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
-					echo $impression . '<!-- ' . $post->post_status . ' -->';
+					echo $impression;
 				} else {
 					if ($limit < sizeof($list)) {
 						$limit++;
