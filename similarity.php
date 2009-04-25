@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.5
+Version: 2.6
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -17,6 +17,9 @@ Author URI: http://www.davidjmiller.org/
 		e.g.: [SIM-BY-TAG] 
 		e.g.: [SIM-BY-CAT] 
 		e.g.: [SIM-BY-MIX] 
+		e.g.: [SIM-BY-TAG-MULTI] 
+		e.g.: [SIM-BY-CAT-MULTI] 
+		e.g.: [SIM-BY-MIX-MULTI] 
 	Full help and instructions at http://www.davidjmiller.org/2008/similarity/
 */
 
@@ -160,7 +163,7 @@ function print_similarity($list) {
 						break;
 					}
 					$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
-					echo $impression . '<!-- ' . $post->post_status . ' -->';
+					echo $impression;
 				} else {
 					if ($limit < sizeof($list)) {
 						$limit++;
@@ -518,5 +521,8 @@ $options = get_option(basename(__FILE__, ".php"));
 add_shortcode('SIM-BY-TAG', 'short_tag');
 add_shortcode('SIM-BY-CAT', 'short_cat');
 add_shortcode('SIM-BY-MIX', 'short_mix');
+add_shortcode('SIM-BY-TAG-MULTI', 'sim_by_tag');
+add_shortcode('SIM-BY-CAT-MULTI', 'sim_by_cat');
+add_shortcode('SIM-BY-MIX-MULTI', 'sim_by_mix');
 add_filter('the_content','auto_display',1200);
 ?>

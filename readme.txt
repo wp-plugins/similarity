@@ -19,7 +19,7 @@ The plugin allows for three function calls anywhere in your page templates (all 
 * `<?php sim_by_tag(); ?>` - determines similarity based on the tags applied to the posts
 * `<?php sim_by_cat(); ?>` - determines similarity based on the categories assigned to the posts
 * `<?php sim_by_mix(); ?>` - determines similarity based on the tags and categories assigned to the posts
-* To display a Similarity list as a widget use a text widget with one of the following shortcodes - `[SIM-BY-TAG]` `[SIM-BY-CAT]` or `[SIM-BY-MIX]`
+* To display a Similarity list as a widget use a text widget with one of the following shortcodes - `[SIM-BY-TAG]` `[SIM-BY-CAT]` `[SIM-BY-MIX]` for single post pages only or for all pages use `[SIM-BY-TAG-MULTI]` `[SIM-BY-CAT-MULTI]` or `[SIM-BY-MIX-MULTI]`
 * To display a Similarity list without altering your templates simply select the function that you would like to auto-display at the bottom of the options page.
 == Installation ==
 
