@@ -14,142 +14,150 @@ msgstr ""
 "X-Poedit-Basepath: \n"
 "X-Poedit-SearchPath-0: ."
 
-#: similarity.php:172
-#: similarity.php:176
-#: similarity.php:178
-#: similarity.php:180
-#: similarity.php:182
-#: similarity.php:194
-#: similarity.php:197
+#: similarity.php:216
+#: similarity.php:220
+#: similarity.php:222
+#: similarity.php:224
+#: similarity.php:226
+#: similarity.php:238
+#: similarity.php:241
 msgid "RANDOM"
 msgstr "Losowe"
 
-#: similarity.php:321
+#: similarity.php:365
 msgid "Similarity Options"
 msgstr "Ustawienia Similarity"
 
-#: similarity.php:321
+#: similarity.php:365
 msgid "Similarity"
 msgstr "Podobieństwo"
 
-#: similarity.php:330
+#: similarity.php:374
 msgid "Unique Post"
 msgstr "Brak podobnych"
 
-#: similarity.php:337
+#: similarity.php:381
 msgid "Strong"
 msgstr "Duże"
 
-#: similarity.php:338
+#: similarity.php:382
 msgid "Mild"
 msgstr "Średnie"
 
-#: similarity.php:339
+#: similarity.php:383
 msgid "Weak"
 msgstr "Małe"
 
-#: similarity.php:340
+#: similarity.php:384
 msgid "Tenuous"
 msgstr "Bardzo małe"
 
-#: similarity.php:379
+#: similarity.php:424
 msgid "Options saved"
 msgstr "Zmieniono ustawienia"
 
-#: similarity.php:387
+#: similarity.php:432
 msgid " Options"
 msgstr "Ustawienia"
 
-#: similarity.php:388
+#: similarity.php:433
 msgid "Help and Instructions"
 msgstr "Pomoc oraz instrukcje"
 
-#: similarity.php:393
+#: similarity.php:438
 msgid "Number of posts to show"
 msgstr "Ile wpisów wyświetlić"
 
-#: similarity.php:397
-#: similarity.php:455
+#: similarity.php:442
+#: similarity.php:500
 msgid "Minimum match strength"
 msgstr "Minimalny stopień dopasowania"
 
-#: similarity.php:398
+#: similarity.php:443
 msgid "(Any number between .00 and 1 with 1 being a perfect match.)"
 msgstr "(dowolna liczba od .00 do 1, gdzie 1 jest idealnym dopasowaniem)"
 
-#: similarity.php:402
+#: similarity.php:447
 msgid "Default display if no matches"
 msgstr "Wyświetl, gdy brak podobnych"
 
-#: similarity.php:406
+#: similarity.php:451
 msgid "Text and codes before the list"
 msgstr "Tekst lub HTML przed listą"
 
-#: similarity.php:410
+#: similarity.php:455
 msgid "Text and codes after the list"
 msgstr "Tekst lub HTML po liście"
 
-#: similarity.php:414
+#: similarity.php:459
 msgid "Display format for similarity strength"
 msgstr "Format w jakim wyświetlać stopień podobieństwa"
 
-#: similarity.php:416
+#: similarity.php:461
 msgid "Visual"
 msgstr "Kolorem"
 
-#: similarity.php:417
+#: similarity.php:462
 msgid "Percent"
 msgstr "Procentem"
 
-#: similarity.php:418
+#: similarity.php:463
 msgid "Text"
 msgstr "Tekstem"
 
-#: similarity.php:419
+#: similarity.php:464
 msgid "Value"
 msgstr "Liczbą"
 
-#: similarity.php:423
+#: similarity.php:468
 msgid "Custom text for strength"
 msgstr "Własny tekst z dopasowaniem"
 
-#: similarity.php:439
+#: similarity.php:484
 msgid "Relative mixing weights"
 msgstr "Wzajemna waga kategorii i etykiet"
 
-#: similarity.php:440
+#: similarity.php:485
 msgid "Tags"
 msgstr "Etykiety"
 
-#: similarity.php:444
+#: similarity.php:489
 msgid "Categories"
 msgstr "Kategorie"
 
-#: similarity.php:447
+#: similarity.php:492
 msgid "Output template"
 msgstr "Szablon wyświetlania"
 
-#: similarity.php:448
+#: similarity.php:493
 msgid "Valid template tags"
 msgstr "Dopuszczalne znaczniki"
 
-#: similarity.php:451
+#: similarity.php:496
 msgid "Show one more random related post"
 msgstr "Pokaż jeden losowy wpis"
 
-#: similarity.php:453
+#: similarity.php:498
 msgid "Yes"
 msgstr "Tak"
 
-#: similarity.php:454
+#: similarity.php:499
 msgid "No"
 msgstr "Nie"
 
-#: similarity.php:455
+#: similarity.php:500
 msgid " (optional)"
 msgstr "(opcjonalne)"
 
-#: similarity.php:460
+#: similarity.php:514
 msgid "Update"
 msgstr "Zmień ustawienia"
+
+#: similarity.php:504
+msgid "Auto-display list from function"
+msgstr "Pokaż automatycznie za pomocą"
+
+#: similarity.php:506
+msgid "None"
+msgstr "Brak"
 
