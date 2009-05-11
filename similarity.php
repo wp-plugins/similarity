@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.6
+Version: 2.7
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -27,19 +27,19 @@ load_plugin_textdomain('similarity', 'wp-content/plugins/similarity');
 
 function sim_by_tag() {
 	$list = get_list("tag");
-	print_similarity($list);
+	echo print_similarity($list);
 	echo '<!-- Similarity - Sim_by_Tag -->';
 }
 function sim_by_cat() {
 	$list = get_list("cat");
-	print_similarity($list);
+	echo print_similarity($list);
 	echo '<!-- Similarity - Sim_by_Cat -->';
 }
 function sim_by_mix() {
 	$taglist = get_list("tag");
 	$catlist = get_list("cat");
 	$list = mix_lists($taglist, $catlist);
-	print_similarity($list);
+	echo print_similarity($list);
 	echo '<!-- Similarity - Sim_by_Mix -->';
 }
 
@@ -49,16 +49,21 @@ function auto_display($content) {
 	$adf = stripslashes($options['adf']);
 	if (is_feed() or $adf == 'none')
 		return $content;
-	elseif (is_single() and $adf != 'none')
+	elseif (is_single() and $adf != 'none') 
 		switch ($adf) {
 		case 'tag':
-			return $content.sim_by_tag();
+			$list = get_list("tag");
+			return $content.'<div class="similarity">'.print_similarity($list).'</div><!-- Tag -->';
 			break;
 		case 'cat':
-			return $content.sim_by_cat();
+			$list = get_list("cat");
+			return $content.'<div class="similarity">'.print_similarity($list).'</div><!-- Cat -->';
 			break;
 		case 'mix':
-			return $content.sim_by_mix();
+			$taglist = get_list("tag");
+			$catlist = get_list("cat");
+			$list = mix_lists($taglist, $catlist);
+			return $content.'<div class="similarity">'.print_similarity($list).'</div><!-- Mix -->';
 			break;
 		default:
 			return $content;
@@ -93,9 +98,10 @@ function print_similarity($list) {
 	$output_template = stripslashes($options['output_template']);
 	// an empty output_template makes no sense so we fall back to the default
 	if ($output_template == '') $output_template = '<li>{link} ({strength})</li>';
-	echo $prefix;
+	$output = '';
+	$output .= $prefix;
 	if (sizeof($list) < 1) {
-		echo $none_text;
+		$output .= $none_text;
 	} else {
 		if ($limit < 0 || $limit > sizeof($list)) {
 			$limit = sizeof($list);
@@ -163,7 +169,7 @@ function print_similarity($list) {
 						break;
 					}
 					$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
-					echo $impression;
+					$output .= $impression;
 				} else {
 					if ($limit < sizeof($list)) {
 						$limit++;
@@ -172,7 +178,7 @@ function print_similarity($list) {
 			}
 		}
 		if ($returnable == 'false') {
-			echo $none_text;
+			$output .= $none_text;
 		} else if (($limit < sizeof($list)) && (stripslashes($options['one_extra']) == 'true')) {
 			$show = 'false';
 			$try = 0;
@@ -242,13 +248,14 @@ function print_similarity($list) {
 						break;
 					}
 					$impression = str_replace("{title}",$post->post_title,str_replace("{url}",get_permalink($list[$i]['post_id']),str_replace("{strength}",$list[$i]['strength'],str_replace("{link}","<a href=\"{url}\">{title}</a>",$output_template))));
-					echo $impression;
+					$output .= $impression;
 				} else { $try++; }
 			}
 		}
 
 	}
-	echo $suffix;
+	$output .= $suffix;
+	return $output;
 }
 
 function get_list($type = 'tag') {
