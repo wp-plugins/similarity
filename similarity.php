@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.7
+Version: 2.8
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -47,9 +47,11 @@ function auto_display($content) {
 	global $wpdb, $post;
 	$options = get_option(basename(__FILE__, ".php"));
 	$adf = stripslashes($options['adf']);
-	if (is_feed() or $adf == 'none')
+	$sim_pages = stripslashes($options['sim_pages']);
+	if ($sim_pages != 'yes') $sim_pages = 'no';
+	if (is_feed())
 		return $content;
-	elseif (is_single() and $adf != 'none') 
+	elseif ((is_single() or (is_page() and $sim_pages == 'yes')) and $adf != 'none') 
 		switch ($adf) {
 		case 'tag':
 			$list = get_list("tag");
@@ -101,7 +103,7 @@ function print_similarity($list) {
 	$output = '';
 	$output .= $prefix;
 	if (sizeof($list) < 1) {
-		$output .= $none_text;
+		$output = $none_text;
 	} else {
 		if ($limit < 0 || $limit > sizeof($list)) {
 			$limit = sizeof($list);
@@ -178,7 +180,7 @@ function print_similarity($list) {
 			}
 		}
 		if ($returnable == 'false') {
-			$output .= $none_text;
+			$output = $none_text;
 		} else if (($limit < sizeof($list)) && (stripslashes($options['one_extra']) == 'true')) {
 			$show = 'false';
 			$try = 0;
@@ -254,7 +256,7 @@ function print_similarity($list) {
 		}
 
 	}
-	$output .= $suffix;
+	if ($returnable == 'true') $output .= $suffix;
 	return $output;
 }
 
@@ -423,6 +425,7 @@ function options_page(){
 			$options['random_min'] = floatval($_POST['random_min']);
 		}
 		$options['adf'] = $_POST['adf'];
+		$options['sim_pages'] = $_POST['sim_pages'];
 
 		// store the option values under the plugin filename
 		update_option(basename(__FILE__, ".php"), $options);
@@ -514,6 +517,14 @@ function options_page(){
 					<input type="radio" name="adf" id="adf" value="tag"<?php if ($options['adf'] == 'tag') echo ' checked'; ?>>sim_by_tag</input>&nbsp;
 					<input type="radio" name="adf" id="adf" value="cat"<?php if ($options['adf'] == 'cat') echo ' checked'; ?>>sim_by_cat</input>&nbsp;
 					<input type="radio" name="adf" id="adf" value="mix"<?php if ($options['adf'] == 'mix') echo ' checked'; ?>>sim_by_mix</input>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right"><?php _e('Display Similarity on pages', 'similarity') ?>:</th>
+				<td>
+					<input type="radio" name="sim_pages" id="sim_pages" value="yes"<?php if ($options['sim_pages'] == 'yes') echo ' checked'; ?>><?php _e('Yes', 'similarity') ?></input>&nbsp;
+					<input type="radio" name="sim_pages" id="sim_pages" value="no"<?php if ($options['sim_pages'] == 'no') echo ' checked'; ?>><?php _e('No', 'similarity') ?></input>
+					(<?php _e('Only useful with if your pages have tags and/or categories assigned.', 'similarity') ?>)
 				</td>
 			</tr>
 		</table>
