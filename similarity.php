@@ -380,7 +380,7 @@ add_action('admin_menu', 'similarity_option_menu');
 
 // Prepare the default set of options
 $default_options['limit'] = 5;
-$default_options['none_text'] = '<li>'.__('Unique Post', 'similarity').'</li>';
+$default_options['none_text'] = '<ul><li>'.__('Unique Post', 'similarity').'</li></ul>';
 $default_options['prefix'] = '<ul>';
 $default_options['suffix'] = '</ul>';
 $default_options['format'] = 'value';
