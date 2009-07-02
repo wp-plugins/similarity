@@ -2,7 +2,7 @@
 Contributors: davidjmillerorg
 Tags: posts, tags, categories, related posts, related, similarity, similar posts, similar
 Requires at least: 2.3
-Tested up to: 2.7.1
+Tested up to: 2.8
 Stable tag: trunk
 
 Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both.
@@ -19,6 +19,12 @@ The plugin allows for three function calls anywhere in your page templates (all 
 * `<?php sim_by_tag(); ?>` - determines similarity based on the tags applied to the posts
 * `<?php sim_by_cat(); ?>` - determines similarity based on the categories assigned to the posts
 * `<?php sim_by_mix(); ?>` - determines similarity based on the tags and categories assigned to the posts
+
+There are also three function calls that are better suited for use in sidebars (specifically when the sidebar is used on the main page)
+
+* `<?php sim_by_tag_multi(); ?>` - determines similarity based on the tags applied to the first post on milti-post pages
+* `<?php sim_by_cat_multi(); ?>` - determines similarity based on the categories assigned to the first post on milti-post pages
+* `<?php sim_by_mix(_multi); ?>` - determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
 * To display a Similarity list as a widget use a text widget with one of the following shortcodes - `[SIM-BY-TAG]` `[SIM-BY-CAT]` `[SIM-BY-MIX]` for single post pages only or for all pages use `[SIM-BY-TAG-MULTI]` `[SIM-BY-CAT-MULTI]` or `[SIM-BY-MIX-MULTI]`
 * To display a Similarity list without altering your templates simply select the function that you would like to auto-display at the bottom of the options page.
 == Installation ==
@@ -37,4 +43,4 @@ If you use the 'Show one more random related post' option the last item in the l
 
 == Screenshots ==
 
-1. This is a sample options page displayed in Wordpress 2.7.1
+1. This is a sample options page displayed in Wordpress 2.8

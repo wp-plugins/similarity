@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.8
+Version: 2.9
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -13,6 +13,9 @@ Author URI: http://www.davidjmiller.org/
 		e.g.: <?php sim_by_tag(); ?> determines similarity based on the tags applied to the posts
 		e.g.: <?php sim_by_cat(); ?> determines similarity based on the categories assigned to the posts
 		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each according to the ratio you assign
+		e.g.: <?php sim_by_tag_multi(); ?> determines similarity based on the tags applied to the first post on milti-post pages
+		e.g.: <?php sim_by_cat_multi(); ?> determines similarity based on the categories assigned to the first post on milti-post pages
+		e.g.: <?php sim_by_mix(_multi); ?> determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
 	Shortcodes:
 		e.g.: [SIM-BY-TAG] 
 		e.g.: [SIM-BY-CAT] 
@@ -32,6 +35,23 @@ function sim_by_tag() {
 }
 function sim_by_cat() {
 	$list = get_list("cat");
+	echo print_similarity($list);
+	echo '<!-- Similarity - Sim_by_Cat -->';
+}
+function sim_by_mix_multi() {
+	$taglist = get_list("firstt");
+	$catlist = get_list("firstc");
+	$list = mix_lists($taglist, $catlist);
+	echo print_similarity($list);
+	echo '<!-- Similarity - Sim_by_Mix -->';
+}
+function sim_by_tag_multi() {
+	$list = get_list("firstt");
+	echo print_similarity($list);
+	echo '<!-- Similarity - Sim_by_Tag -->';
+}
+function sim_by_cat_multi() {
+	$list = get_list("firstc");
 	echo print_similarity($list);
 	echo '<!-- Similarity - Sim_by_Cat -->';
 }
@@ -262,6 +282,16 @@ function print_similarity($list) {
 
 function get_list($type = 'tag') {
 	global $post, $wpdb, $wp_version;
+	switch ($type) {
+	case "firstc":
+		if (have_posts()) the_post();
+		$type = 'cat';
+		break;
+	case "firstt":
+		if (have_posts()) the_post();
+		$type = 'tag';
+		break;
+	}
 	$list = array();
 	$id_list = array();
 	$strength_list = array();
@@ -432,6 +462,28 @@ function options_page(){
 		
 		// Show a message to say we've done something
 		echo '<div class="updated"><p>' . __('Options saved', 'similarity') . '</p></div>';
+	} elseif (isset($_POST['restore_defaults'])) {
+		$options['limit'] = 5;
+		$options['none_text'] = '<ul><li>'.__('Unique Post', 'similarity').'</li></ul>';
+		$options['prefix'] = '<ul>';
+		$options['suffix'] = '</ul>';
+		$options['format'] = 'value';
+		$options['output_template'] = '<li>{link} ({strength})</li>';
+		$options['tag_weight'] = 1;
+		$options['cat_weight'] = 1;
+		$options['text_strong'] = '<strong>'.__('Strong', 'similarity').'</strong>';
+		$options['text_mild'] = __('Mild', 'similarity');
+		$options['text_weak'] = __('Weak', 'similarity');
+		$options['text_tenuous'] = '<em>'.__('Tenuous', 'similarity').'</em>';
+		$options['one_extra'] = 'false';
+		$options['minimum_strength'] = 0;
+		$options['random_min'] = 0;
+
+		// store the option values under the plugin filename
+		update_option(basename(__FILE__, ".php"), $options);
+		
+		// Show a message to say we've done something
+		echo '<div class="updated"><p>' . __('Factory Settings applied', 'similarity') . '</p></div>';
 	} else {
 		// If we are just displaying the page we first load up the options array
 		$options = get_option(basename(__FILE__, ".php"));
@@ -529,7 +581,10 @@ function options_page(){
 			</tr>
 		</table>
 		</fieldset>
-		<div class="submit"><input type="submit" name="update_options" value="<?php _e('Update', 'similarity') ?>"  style="font-weight:bold;" /></div>
+		<div class="submit">
+			<input type="submit" name="update_options" value="<?php _e('Update', 'similarity') ?>"  style="font-weight:bold;" />
+			<input type="submit" name="restore_defaults" value="<?php _e('Restore Defaults', 'similarity') ?>"  style="font-weight:bold;" />
+		</div>
 		</form>    		
 	</div>
 	<?php	
