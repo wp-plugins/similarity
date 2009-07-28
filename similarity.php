@@ -15,7 +15,7 @@ Author URI: http://www.davidjmiller.org/
 		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each according to the ratio you assign
 		e.g.: <?php sim_by_tag_multi(); ?> determines similarity based on the tags applied to the first post on milti-post pages
 		e.g.: <?php sim_by_cat_multi(); ?> determines similarity based on the categories assigned to the first post on milti-post pages
-		e.g.: <?php sim_by_mix(_multi); ?> determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
+		e.g.: <?php sim_by_mix(multi); ?> determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
 	Shortcodes:
 		e.g.: [SIM-BY-TAG] 
 		e.g.: [SIM-BY-CAT] 
