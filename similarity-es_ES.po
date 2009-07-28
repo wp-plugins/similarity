@@ -1,0 +1,230 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Similarity v2.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2009-07-28 20:33+0200\n"
+"Last-Translator: admin <bjoern@buerstinghaus.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: similarity.php:244
+#: similarity.php:248
+#: similarity.php:250
+#: similarity.php:252
+#: similarity.php:254
+#: similarity.php:266
+#: similarity.php:269
+#@ similarity
+msgid "RANDOM"
+msgstr "AZAR"
+
+#: similarity.php:404
+#@ similarity
+msgid "Similarity Options"
+msgstr "Similarity Opciones"
+
+#: similarity.php:404
+#@ similarity
+msgid "Similarity"
+msgstr "Similiarity"
+
+#: similarity.php:413
+#: similarity.php:467
+#@ similarity
+msgid "Unique Post"
+msgstr "Publicar única"
+
+#: similarity.php:420
+#: similarity.php:474
+#@ similarity
+msgid "Strong"
+msgstr "Cachas"
+
+#: similarity.php:421
+#: similarity.php:475
+#@ similarity
+msgid "Mild"
+msgstr "Leve "
+
+#: similarity.php:422
+#: similarity.php:476
+#@ similarity
+msgid "Weak"
+msgstr "Débil"
+
+#: similarity.php:423
+#: similarity.php:477
+#@ similarity
+msgid "Tenuous"
+msgstr "Tenue"
+
+#: similarity.php:464
+#@ similarity
+msgid "Options saved"
+msgstr "Opciones de guardado"
+
+#: similarity.php:486
+#@ similarity
+msgid "Factory Settings applied"
+msgstr "Fábrica de los ajustes que se aplican"
+
+#: similarity.php:494
+#@ similarity
+msgid " Options"
+msgstr "Opciones"
+
+#: similarity.php:495
+#@ similarity
+msgid "Help and Instructions"
+msgstr "Ayuda e Instrucciones"
+
+#: similarity.php:500
+#@ similarity
+msgid "Number of posts to show"
+msgstr "Número de puestos para mostrar"
+
+#: similarity.php:504
+#: similarity.php:562
+#@ similarity
+msgid "Minimum match strength"
+msgstr "Mínimo coincide con fuerza"
+
+#: similarity.php:505
+#@ similarity
+msgid "(Any number between .00 and 1 with 1 being a perfect match.)"
+msgstr "(Cualquier número entre .00 y 1 con 1 siendo una combinación perfecta.)"
+
+#: similarity.php:509
+#@ similarity
+msgid "Default display if no matches"
+msgstr "Visualización por defecto si no coincide con"
+
+#: similarity.php:513
+#@ similarity
+msgid "Text and codes before the list"
+msgstr "Texto y los códigos antes de la lista"
+
+#: similarity.php:517
+#@ similarity
+msgid "Text and codes after the list"
+msgstr "Texto y los códigos después de la lista"
+
+#: similarity.php:521
+#@ similarity
+msgid "Display format for similarity strength"
+msgstr "Formato de visualización de similitud fuerza"
+
+#: similarity.php:523
+#@ similarity
+msgid "Visual"
+msgstr "Visual"
+
+#: similarity.php:524
+#@ similarity
+msgid "Percent"
+msgstr "Por ciento"
+
+#: similarity.php:525
+#@ similarity
+msgid "Text"
+msgstr "Texto"
+
+#: similarity.php:526
+#@ similarity
+msgid "Value"
+msgstr "Valor"
+
+#: similarity.php:530
+#@ similarity
+msgid "Custom text for strength"
+msgstr "Texto personalizado para la fuerza"
+
+#: similarity.php:546
+#@ similarity
+msgid "Relative mixing weights"
+msgstr "Peso relativo de mezcla"
+
+#: similarity.php:547
+#@ similarity
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: similarity.php:551
+#@ similarity
+msgid "Categories"
+msgstr "Categorías"
+
+#: similarity.php:554
+#@ similarity
+msgid "Output template"
+msgstr "Plantilla"
+
+#: similarity.php:555
+#@ similarity
+msgid "Valid template tags"
+msgstr "Códigos de plantilla válido"
+
+#: similarity.php:558
+#@ similarity
+msgid "Show one more random related post"
+msgstr "Mostrar más aleatorios relacionados con un puesto"
+
+#: similarity.php:560
+#: similarity.php:577
+#@ similarity
+msgid "Yes"
+msgstr "Sí"
+
+#: similarity.php:561
+#: similarity.php:578
+#@ similarity
+msgid "No"
+msgstr "No"
+
+#: similarity.php:562
+#@ similarity
+msgid " (optional)"
+msgstr " (opcional) "
+
+#: similarity.php:566
+#@ similarity
+msgid "Auto-display list from function"
+msgstr "Auto-función de visualización de lista"
+
+#: similarity.php:568
+#@ similarity
+msgid "None"
+msgstr "ninguno"
+
+#: similarity.php:575
+#@ similarity
+msgid "Display Similarity on pages"
+msgstr "Mostrar la similitud en las páginas"
+
+#: similarity.php:579
+#@ similarity
+msgid "Only useful with if your pages have tags and/or categories assigned."
+msgstr "Sólo útil si sus páginas tienen etiquetas y / o categorías asignadas"
+
+#: similarity.php:585
+#@ similarity
+msgid "Update"
+msgstr "Actualizar"
+
+#: similarity.php:586
+#@ similarity
+msgid "Restore Defaults"
+msgstr "Restaurar valores predeterminados "
+

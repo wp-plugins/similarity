@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.9
+Version: 2.10
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -15,7 +15,7 @@ Author URI: http://www.davidjmiller.org/
 		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each according to the ratio you assign
 		e.g.: <?php sim_by_tag_multi(); ?> determines similarity based on the tags applied to the first post on milti-post pages
 		e.g.: <?php sim_by_cat_multi(); ?> determines similarity based on the categories assigned to the first post on milti-post pages
-		e.g.: <?php sim_by_mix(_multi); ?> determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
+		e.g.: <?php sim_by_mix(multi); ?> determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
 	Shortcodes:
 		e.g.: [SIM-BY-TAG] 
 		e.g.: [SIM-BY-CAT] 
@@ -594,8 +594,8 @@ $options = get_option(basename(__FILE__, ".php"));
 add_shortcode('SIM-BY-TAG', 'short_tag');
 add_shortcode('SIM-BY-CAT', 'short_cat');
 add_shortcode('SIM-BY-MIX', 'short_mix');
-add_shortcode('SIM-BY-TAG-MULTI', 'sim_by_tag');
-add_shortcode('SIM-BY-CAT-MULTI', 'sim_by_cat');
-add_shortcode('SIM-BY-MIX-MULTI', 'sim_by_mix');
+add_shortcode('SIM-BY-TAG-MULTI', 'sim_by_tag_multi');
+add_shortcode('SIM-BY-CAT-MULTI', 'sim_by_cat_multi');
+add_shortcode('SIM-BY-MIX-MULTI', 'sim_by_mix_multi');
 add_filter('the_content','auto_display',1200);
 ?>
