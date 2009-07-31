@@ -44,3 +44,78 @@ If you use the 'Show one more random related post' option the last item in the l
 == Screenshots ==
 
 1. This is a sample options page displayed in Wordpress 2.8
+
+== Changelog ==
+
+= 2.10 =
+* Shortcodes for multi-post pages now point to the new multi-page functions introduced in version 2.9 for use in sidebars where you want a similarity list for the first post on a multi-post page.
+* There are also new translations for German, Italian, and Spanish. (In addition to the existing translations for French and Polish)
+
+= 2.9 =
+* Functions sim_by_tag_multi, sim_by_cat_multi, and sim_by_mix_multi were added for use in sidebars where you want a similarity list for the first post on a multi-post page.
+* New button on the Similarity Options page to restore default settings
+
+= 2.8 =
+* Automatic Similarity lists may now be shown on pages. When no similar results are found only “Default display if no matches:” is shown.
+* ”Text and codes before/after the list” are replaced by "Default display if no matches"
+** If you wish to display the contents of the before and after variables simply insert them into the “Default display if no matches:” field.
+
+= 2.7 =
+* Fixed a bug in the output so that the Auto Display function lists similar posts at the end of the post consistently.
+* Added div tags with class “similarity” around auto-generated list to allow for custom styling.
+
+= 2.6 =
+* Added Shorcodes SIM-BY-TAG-MULTI, SIM-BY-CAT-MULTI, and SIM-BY-MIX-MULTI for use on multi post pages.
+** These codes may potentially cause slow page loads (which is why I restricted the old shortcodes to work on single post pages as of version 2.5).
+** I added these codes after a report in the comments that the old codes worked fine in at least one multi-post setting.
+
+= 2.5 =
+* Option to automatically display Similarity lists at the end of single posts without altering your templates – just select the function you want to use on the options page!
+* Shorcodes are now fixed to only display on single post pages.
+
+= 2.3 =
+* Added Shorcodes SIM-BY-TAG, SIM-BY-CAT, and SIM-BY-MIX for use in text widgets
+
+= 2.2.1 =
+* Bug fixes for the random minimum strength.
+
+= 2.2 =
+* Option to place a minimum similarity strength for random item at the end of the list (this is separate from the minimum strength for the list as a whole).
+
+= 2.1 =
+* Option to place a minimum similarity strength for list inclusion.
+* The Plus One option ignores the minimum strength for the final list entry.
+
+= 2.0 =
+* Non-posts such as pictures are saved as posts by Wordpress with a post-status of “inherit” these are now excluded from results.
+
+= 1.9 =
+* Drafts are excluded from results. If, for some reason, all related posts are private or drafts users will get the no results output (before there would have been an empty list without explanation).
+
+= 1.8 =
+* Future dated posts are excluded from results.
+
+= 1.7 =
+* Private posts may be listed as similar for the post author and users with “read private posts” capability.
+
+= 1.6 =
+* Allows for the display of a random related post after the list of strongest related posts.
+
+= 1.5 =
+* Added an option to display {strength} as a word, or a colored indicator.
+* Similarity is now coded for translation
+* The bugfix in 1.4 is now backwards compatible to Wordpress 2.3 again.
+
+= 1.4 =
+* Fixed a bug related to post revisions 
+* Added an option to display {strength} as a percentage instead of as a decimal value.
+
+= 1.3 =
+* Added the sim_by_mix function and the associated options.
+
+= 1.2 =
+* Tested compatibility with WP 2.7 
+* Minor modification to the documentation.
+
+= 1.1 =
+* Added a randomizer in case there are too many posts that are all equally related.
