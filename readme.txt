@@ -47,6 +47,9 @@ If you use the 'Show one more random related post' option the last item in the l
 
 == Changelog ==
 
+= 2.11 =
+* Improved accuracy in determining output when minimum similarity is set above zero. (Previously an empty list might be displayed rather than the output for empty lists if there were related posts but only below the minimum similarity.)
+
 = 2.10 =
 * Shortcodes for multi-post pages now point to the new multi-page functions introduced in version 2.9 for use in sidebars where you want a similarity list for the first post on a multi-post page.
 * There are also new translations for German, Italian, and Spanish. (In addition to the existing translations for French and Polish)
