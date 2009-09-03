@@ -47,6 +47,9 @@ If you use the 'Show one more random related post' option the last item in the l
 
 == Changelog ==
 
+= 2.12 =
+* Pending posts were previously treated like public posts in Similarity lists (an oversight on my part) - they are now treated like drafts
+
 = 2.11 =
 * Improved accuracy in determining output when minimum similarity is set above zero. (Previously an empty list might be displayed rather than the output for empty lists if there were related posts but only below the minimum similarity.)
 
