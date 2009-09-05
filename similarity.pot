@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/similarity\n"
-"POT-Creation-Date: 2009-02-03 13:28+0000\n"
+"POT-Creation-Date: 2009-09-05 13:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,129 +16,163 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: similarity.php:95 similarity.php:99 similarity.php:101 similarity.php:103
-#: similarity.php:105 similarity.php:117 similarity.php:120
+#: similarity.php:246 similarity.php:250 similarity.php:252 similarity.php:254
+#: similarity.php:256 similarity.php:268 similarity.php:271
 msgid "RANDOM"
 msgstr ""
 
-#: similarity.php:237
+#: similarity.php:410
 msgid "Similarity Options"
 msgstr ""
 
-#: similarity.php:237
+#. #-#-#-#-#  plugin.pot (PACKAGE VERSION)  #-#-#-#-#
+#. Plugin Name of an extension
+#: similarity.php:410
 msgid "Similarity"
 msgstr ""
 
-#: similarity.php:246
+#: similarity.php:419 similarity.php:473
 msgid "Unique Post"
 msgstr ""
 
-#: similarity.php:253
+#: similarity.php:426 similarity.php:480
 msgid "Strong"
 msgstr ""
 
-#: similarity.php:254
+#: similarity.php:427 similarity.php:481
 msgid "Mild"
 msgstr ""
 
-#: similarity.php:255
+#: similarity.php:428 similarity.php:482
 msgid "Weak"
 msgstr ""
 
-#: similarity.php:256
+#: similarity.php:429 similarity.php:483
 msgid "Tenuous"
 msgstr ""
 
-#: similarity.php:285
+#: similarity.php:470
 msgid "Options saved"
 msgstr ""
 
-#: similarity.php:293
+#: similarity.php:492
+msgid "Factory Settings applied"
+msgstr ""
+
+#: similarity.php:500
 msgid " Options"
 msgstr ""
 
-#: similarity.php:294
+#: similarity.php:501
 msgid "Help and Instructions"
 msgstr ""
 
-#: similarity.php:299
+#: similarity.php:506
 msgid "Number of posts to show"
 msgstr ""
 
-#: similarity.php:303
+#: similarity.php:510 similarity.php:568
+msgid "Minimum match strength"
+msgstr ""
+
+#: similarity.php:511
+msgid "(Any number between .00 and 1 with 1 being a perfect match.)"
+msgstr ""
+
+#: similarity.php:515
 msgid "Default display if no matches"
 msgstr ""
 
-#: similarity.php:307
+#: similarity.php:519
 msgid "Text and codes before the list"
 msgstr ""
 
-#: similarity.php:311
+#: similarity.php:523
 msgid "Text and codes after the list"
 msgstr ""
 
-#: similarity.php:315
+#: similarity.php:527
 msgid "Display format for similarity strength"
 msgstr ""
 
-#: similarity.php:317
+#: similarity.php:529
 msgid "Visual"
 msgstr ""
 
-#: similarity.php:318
+#: similarity.php:530
 msgid "Percent"
 msgstr ""
 
-#: similarity.php:319
+#: similarity.php:531
 msgid "Text"
 msgstr ""
 
-#: similarity.php:320
+#: similarity.php:532
 msgid "Value"
 msgstr ""
 
-#: similarity.php:324
+#: similarity.php:536
 msgid "Custom text for strength"
 msgstr ""
 
-#: similarity.php:340
+#: similarity.php:552
 msgid "Relative mixing weights"
 msgstr ""
 
-#: similarity.php:341
+#: similarity.php:553
 msgid "Tags"
 msgstr ""
 
-#: similarity.php:345
+#: similarity.php:557
 msgid "Categories"
 msgstr ""
 
-#: similarity.php:348
+#: similarity.php:560
 msgid "Output template"
 msgstr ""
 
-#: similarity.php:349
+#: similarity.php:561
 msgid "Valid template tags"
 msgstr ""
 
-#: similarity.php:352
+#: similarity.php:564
 msgid "Show one more random related post"
 msgstr ""
 
-#: similarity.php:354
+#: similarity.php:566 similarity.php:583
 msgid "Yes"
 msgstr ""
 
-#: similarity.php:355
+#: similarity.php:567 similarity.php:584
 msgid "No"
 msgstr ""
 
-#: similarity.php:360
+#: similarity.php:568
+msgid " (optional)"
+msgstr ""
+
+#: similarity.php:572
+msgid "Auto-display list from function"
+msgstr ""
+
+#: similarity.php:574
+msgid "None"
+msgstr ""
+
+#: similarity.php:581
+msgid "Display Similarity on pages"
+msgstr ""
+
+#: similarity.php:585
+msgid "Only useful with if your pages have tags and/or categories assigned."
+msgstr ""
+
+#: similarity.php:591
 msgid "Update"
 msgstr ""
 
-#. Plugin Name of an extension
-msgid "Similarity"
+#: similarity.php:592
+msgid "Restore Defaults"
 msgstr ""
 
 #. Plugin URI of an extension
@@ -147,8 +181,8 @@ msgstr ""
 
 #. Description of an extension
 msgid ""
-"Returns links to similar posts. Similarity is determined by the way posts are "
-"tagged or by their categories. Compatible with Wordpress 2.3 and above. "
+"Returns links to similar posts. Similarity is determined by the way posts "
+"are tagged or by their categories. Compatible with Wordpress 2.3 and above. "
 "(Tested on 2.3, 2.5, 2.6, 2.7)"
 msgstr ""
 
