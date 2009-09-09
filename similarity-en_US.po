@@ -1,0 +1,136 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Similarity v1.6\n"
+"PO-Revision-Date: 2009-01-29 19:08-0700\n"
+"Last-Translator: david <mr.david.miller@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;__ngettext_noop:1,2;_c\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-SearchPath-0: ."
+
+#: similarity.php:206
+msgid "Similarity Options"
+msgstr ""
+
+#: similarity.php:206
+msgid "Similarity"
+msgstr ""
+
+#: similarity.php:215
+msgid "Unique Post"
+msgstr ""
+
+#: similarity.php:222
+msgid "Strong"
+msgstr ""
+
+#: similarity.php:223
+msgid "Mild"
+msgstr ""
+
+#: similarity.php:224
+msgid "Weak"
+msgstr ""
+
+#: similarity.php:225
+msgid "Tenuous"
+msgstr ""
+
+#: similarity.php:254
+msgid "Options saved"
+msgstr ""
+
+#: similarity.php:262
+msgid " Options"
+msgstr ""
+
+#: similarity.php:263
+msgid "Help and Instructions"
+msgstr ""
+
+#: similarity.php:268
+msgid "Number of posts to show"
+msgstr ""
+
+#: similarity.php:272
+msgid "Default display if no matches"
+msgstr ""
+
+#: similarity.php:276
+msgid "Text and codes before the list"
+msgstr ""
+
+#: similarity.php:280
+msgid "Text and codes after the list"
+msgstr ""
+
+#: similarity.php:284
+msgid "Display format for similarity strength"
+msgstr ""
+
+#: similarity.php:286
+msgid "Visual"
+msgstr ""
+
+#: similarity.php:287
+msgid "Percent"
+msgstr ""
+
+#: similarity.php:288
+msgid "Text"
+msgstr ""
+
+#: similarity.php:289
+msgid "Value"
+msgstr ""
+
+#: similarity.php:293
+msgid "Custom text for strength"
+msgstr ""
+
+#: similarity.php:309
+msgid "Relative mixing weights"
+msgstr ""
+
+#: similarity.php:310
+msgid "Tags"
+msgstr ""
+
+#: similarity.php:314
+msgid "Categories"
+msgstr ""
+
+#: similarity.php:317
+msgid "Output template"
+msgstr ""
+
+#: similarity.php:318
+msgid "Valid template tags"
+msgstr ""
+
+#: similarity.php:321
+msgid "Show one more random related post"
+msgstr ""
+
+#: similarity.php:323
+msgid "Yes"
+msgstr ""
+
+#: similarity.php:324
+msgid "No"
+msgstr ""
+
+#: similarity.php:329
+msgid "Update"
+msgstr ""
+
+#: similarity.php:92
+msgid "RANDOM"
+msgstr ""
+

@@ -1,0 +1,240 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Similarity v1.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2009-01-29 03:27-0500\n"
+"Last-Translator: Li-An <lian00@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: similarity.php:437
+#: similarity.php:499
+#@ similarity
+msgid "Strong"
+msgstr "Fort"
+
+#: similarity.php:438
+#: similarity.php:500
+#@ similarity
+msgid "Mild"
+msgstr "Moyen"
+
+#: similarity.php:439
+#: similarity.php:501
+#@ similarity
+msgid "Weak"
+msgstr "Faible"
+
+#: similarity.php:440
+#: similarity.php:502
+#@ similarity
+msgid "Tenuous"
+msgstr "Ténu"
+
+#: similarity.php:417
+#@ similarity
+msgid "Similarity Options"
+msgstr "Options de Similarity"
+
+#: similarity.php:417
+#@ similarity
+msgid "Similarity"
+msgstr "Similarity"
+
+#: similarity.php:426
+#: similarity.php:488
+#@ similarity
+msgid "Unique Post"
+msgstr "Billet unique"
+
+#: similarity.php:485
+#@ similarity
+msgid "Options saved"
+msgstr "Options sauvegardées"
+
+#: similarity.php:519
+#@ similarity
+msgid " Options"
+msgstr " Options"
+
+#: similarity.php:520
+#@ similarity
+msgid "Help and Instructions"
+msgstr "Aide et instructions"
+
+#: similarity.php:525
+#@ similarity
+msgid "Number of posts to show"
+msgstr "Nombre de billets à lister"
+
+#: similarity.php:534
+#@ similarity
+msgid "Default display if no matches"
+msgstr "Affichage par défaut si il n'y a pas de correspondance"
+
+#: similarity.php:543
+#@ similarity
+msgid "Text and codes before the list"
+msgstr "Texte et codes avant la liste"
+
+#: similarity.php:548
+#@ similarity
+msgid "Text and codes after the list"
+msgstr "Texte et codes après la liste"
+
+#: similarity.php:562
+#@ similarity
+msgid "Display format for similarity strength"
+msgstr "Format d'affichage suivant la valeur de correspondance"
+
+#: similarity.php:564
+#@ similarity
+msgid "Visual"
+msgstr "Visuel"
+
+#: similarity.php:565
+#@ similarity
+msgid "Percent"
+msgstr "Pourcentage"
+
+#: similarity.php:566
+#@ similarity
+msgid "Text"
+msgstr "Texte"
+
+#: similarity.php:567
+#@ similarity
+msgid "Value"
+msgstr "Valeur"
+
+#: similarity.php:587
+#@ similarity
+msgid "Relative mixing weights"
+msgstr "Poids relatifs des paramètres de calcul"
+
+#: similarity.php:588
+#@ similarity
+msgid "Tags"
+msgstr "Tags"
+
+#: similarity.php:592
+#@ similarity
+msgid "Categories"
+msgstr "Catégories"
+
+#: similarity.php:553
+#@ similarity
+msgid "Output template"
+msgstr "Modèle d'affichage"
+
+#: similarity.php:559
+#@ similarity
+msgid "Valid template tags"
+msgstr "Modèles de tags utilisables"
+
+#: similarity.php:622
+#@ similarity
+msgid "Update"
+msgstr "Mise à jour"
+
+#: similarity.php:571
+#@ similarity
+msgid "Custom text for strength"
+msgstr "Personnaliser le texte traduisant l'importance de la correspondance"
+
+#: similarity.php:595
+#@ similarity
+msgid "Show one more random related post"
+msgstr "Afficher dans la liste un billet relatif aléatoire en plus"
+
+#: similarity.php:597
+#: similarity.php:614
+#@ similarity
+msgid "Yes"
+msgstr "Oui"
+
+#: similarity.php:598
+#: similarity.php:615
+#@ similarity
+msgid "No"
+msgstr "Non"
+
+#: similarity.php:253
+#: similarity.php:257
+#: similarity.php:259
+#: similarity.php:261
+#: similarity.php:263
+#: similarity.php:275
+#: similarity.php:278
+#@ similarity
+msgid "RANDOM"
+msgstr "au hasard"
+
+#: similarity.php:529
+#: similarity.php:599
+#@ similarity
+msgid "Minimum match strength"
+msgstr "Correspondance minimum"
+
+#: similarity.php:530
+#@ similarity
+msgid "(Any number between .00 and 1 with 1 being a perfect match.)"
+msgstr "(n'importe quel nombre entre .00 et 1 sachant que 1 est associé à une correspondance parfaite)"
+
+#: similarity.php:599
+#@ similarity
+msgid " (optional)"
+msgstr "(optionnel)"
+
+#: similarity.php:603
+#@ similarity
+msgid "Auto-display list from function"
+msgstr "Afficher automatiquement la liste à partir de la fonction"
+
+#: similarity.php:605
+#@ similarity
+msgid "None"
+msgstr "Aucune"
+
+#: similarity.php:612
+#@ similarity
+msgid "Display Similarity on pages"
+msgstr "Afficher Similarity dans les pages"
+
+#: similarity.php:616
+#@ similarity
+msgid "Only useful with if your pages have tags and/or categories assigned."
+msgstr "Utile uniquement dans le cas où des tags ou/et des catégories sont associés à vos pages."
+
+#: similarity.php:511
+#@ similarity
+msgid "Factory Settings applied"
+msgstr "Réglages d'usine appliqués"
+
+#: similarity.php:623
+#@ similarity
+msgid "Restore Defaults"
+msgstr "Restaurer les réglages par défaut"
+
+#: similarity.php:539
+#@ similarity
+msgid "Template functions"
+msgstr "Fonctions liées au thème"
+
+#: similarity.php:540
+#@ similarity
+msgid "Auto display functions"
+msgstr "Fonctions d'affichage automatique"
+
