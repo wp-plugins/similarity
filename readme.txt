@@ -47,8 +47,11 @@ If you use the 'Show one more random related post' option the last item in the l
 
 == Changelog ==
 
-= 2.13 =
+= 2.13.1 =
 * New options make it possible to layout and style the php function generated lists (for sidebars) independent of the auto-generated list.
+
+= 2.13 =
+* Mistaken release - corrected in 2.13.1.
 
 = 2.12 =
 * Pending posts were previously treated like public posts in Similarity lists (an oversight on my part) - they are now treated like drafts

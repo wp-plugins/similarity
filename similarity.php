@@ -2,8 +2,8 @@
 /*
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
-Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.13
+Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7, 2.8)
+Version: 2.13.1
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -15,7 +15,7 @@ Author URI: http://www.davidjmiller.org/
 		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each according to the ratio you assign
 		e.g.: <?php sim_by_tag_multi(); ?> determines similarity based on the tags applied to the first post on milti-post pages
 		e.g.: <?php sim_by_cat_multi(); ?> determines similarity based on the categories assigned to the first post on milti-post pages
-		e.g.: <?php sim_by_mix_multi(); ?> determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
+		e.g.: <?php sim_by_mix(multi); ?> determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
 	Shortcodes:
 		e.g.: [SIM-BY-TAG] 
 		e.g.: [SIM-BY-CAT] 
@@ -30,43 +30,37 @@ load_plugin_textdomain('similarity', 'wp-content/plugins/similarity');
 
 function sim_by_tag() {
 	$list = get_list("tag");
-	echo '<div class="similarity">';
 	echo print_similarity($list);
-	echo '</div><!-- Similarity - Sim_by_Tag -->';
+	echo '<!-- Similarity - Sim_by_Tag -->';
 }
 function sim_by_cat() {
 	$list = get_list("cat");
-	echo '<div class="similarity">';
 	echo print_similarity($list);
-	echo '</div><!-- Similarity - Sim_by_Cat -->';
-}
-function sim_by_mix() {
-	$taglist = get_list("tag");
-	$catlist = get_list("cat");
-	$list = mix_lists($taglist, $catlist);
-	echo '<div class="similarity">';
-	echo print_similarity($list);
-	echo '</div><!-- Similarity - Sim_by_Mix -->';
-}
-function sim_by_tag_multi() {
-	$list = get_list("firstt");
-	echo '<div class="similarity_sb">';
-	echo print_similarity($list);
-	echo '</div><!-- Similarity - Sim_by_Tag -->';
-}
-function sim_by_cat_multi() {
-	$list = get_list("firstc");
-	echo '<div class="similarity_sb">';
-	echo print_similarity($list);
-	echo '</div><!-- Similarity - Sim_by_Cat -->';
+	echo '<!-- Similarity - Sim_by_Cat -->';
 }
 function sim_by_mix_multi() {
 	$taglist = get_list("firstt");
 	$catlist = get_list("firstc");
 	$list = mix_lists($taglist, $catlist);
-	echo '<div class="similarity_sb">';
 	echo print_similarity($list);
-	echo '</div><!-- Similarity - Sim_by_Mix -->';
+	echo '<!-- Similarity - Sim_by_Mix -->';
+}
+function sim_by_tag_multi() {
+	$list = get_list("firstt");
+	echo print_similarity($list);
+	echo '<!-- Similarity - Sim_by_Tag -->';
+}
+function sim_by_cat_multi() {
+	$list = get_list("firstc");
+	echo print_similarity($list);
+	echo '<!-- Similarity - Sim_by_Cat -->';
+}
+function sim_by_mix() {
+	$taglist = get_list("tag");
+	$catlist = get_list("cat");
+	$list = mix_lists($taglist, $catlist);
+	echo print_similarity($list);
+	echo '<!-- Similarity - Sim_by_Mix -->';
 }
 
 function auto_display($content) {
@@ -91,7 +85,7 @@ function auto_display($content) {
 			$taglist = get_list("tag");
 			$catlist = get_list("cat");
 			$list = mix_lists($taglist, $catlist);
-			return $content.'<div class="similarity">'.print_similarity($list).'</div><!-- Mix -->';
+			return $content.'<div class="similarity">'.print_similarity($list, 'auto').'</div><!-- Mix -->';
 			break;
 		default:
 			return $content;
@@ -113,17 +107,24 @@ function short_mix() {
 	if (is_single()) sim_by_mix();
 }
 
-function print_similarity($list) {
+function print_similarity($list, $template = 'default') {
 	global $current_user;
 	$options = get_option(basename(__FILE__, ".php"));
 	$limit = stripslashes($options['limit']);
 	$none_text = stripslashes($options['none_text']);
-	$prefix = stripslashes($options['prefix']);
-	$suffix = stripslashes($options['suffix']);
-	$format = stripslashes($options['format']);
+	if ($template == 'auto') {
+		$prefix = stripslashes($options['auto_prefix']);
+		$suffix = stripslashes($options['auto_suffix']);
+		$format = stripslashes($options['auto_format']);
+		$output_template = stripslashes($options['auto_output_template']);
+	} else {
+		$prefix = stripslashes($options['prefix']);
+		$suffix = stripslashes($options['suffix']);
+		$format = stripslashes($options['format']);
+		$output_template = stripslashes($options['output_template']);
+	}
 	$minimum_strength = stripslashes($options['minimum_strength']);
 	$random_min = stripslashes($options['random_min']);
-	$output_template = stripslashes($options['output_template']);
 	// an empty output_template makes no sense so we fall back to the default
 	if ($output_template == '') $output_template = '<li>{link} ({strength})</li>';
 	$output = '';
@@ -427,6 +428,10 @@ $default_options['prefix'] = '<ul>';
 $default_options['suffix'] = '</ul>';
 $default_options['format'] = 'value';
 $default_options['output_template'] = '<li>{link} ({strength})</li>';
+$default_options['auto_prefix'] = '<ul>';
+$default_options['auto_suffix'] = '</ul>';
+$default_options['auto_format'] = 'value';
+$default_options['auto_output_template'] = '<li>{link} ({strength})</li>';
 $default_options['tag_weight'] = 1;
 $default_options['cat_weight'] = 1;
 $default_options['text_strong'] = '<strong>'.__('Strong', 'similarity').'</strong>';
@@ -449,6 +454,10 @@ function options_page(){
 		$options['suffix'] = $_POST['suffix'];
 		$options['format'] = $_POST['format'];
 		$options['output_template'] = $_POST['output_template'];
+		$options['auto_prefix'] = $_POST['auto_prefix'];
+		$options['auto_suffix'] = $_POST['auto_suffix'];
+		$options['auto_format'] = $_POST['auto_format'];
+		$options['auto_output_template'] = $_POST['auto_output_template'];
 		$options['tag_weight'] = $_POST['tag_weight'];
 		$options['cat_weight'] = $_POST['cat_weight'];
 		$options['text_strong'] = $_POST['text_strong'];
@@ -481,6 +490,10 @@ function options_page(){
 		$options['suffix'] = '</ul>';
 		$options['format'] = 'value';
 		$options['output_template'] = '<li>{link} ({strength})</li>';
+		$options['auto_prefix'] = '<ul>';
+		$options['auto_suffix'] = '</ul>';
+		$options['auto_format'] = 'value';
+		$options['auto_output_template'] = '<li>{link} ({strength})</li>';
 		$options['tag_weight'] = 1;
 		$options['cat_weight'] = 1;
 		$options['text_strong'] = '<strong>'.__('Strong', 'similarity').'</strong>';
@@ -510,28 +523,44 @@ function options_page(){
 		<table class="optiontable">
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Number of posts to show', 'similarity') ?>:</th>
-				<td><input name="limit" type="text" id="limit" value="<?php echo $options['limit']; ?>" size="2" /></td>
+				<td colspan="2"><input name="limit" type="text" id="limit" value="<?php echo $options['limit']; ?>" size="2" /></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Minimum match strength', 'similarity') ?>:</th>
-				<td><input name="minimum_strength" type="text" id="minimum_strength" value="<?php echo $options['minimum_strength']; ?>" size="5" /> <?php _e('(Any number between .00 and 1 with 1 being a perfect match.)', 'similarity') ?></td>
+				<td colspan="2"><input name="minimum_strength" type="text" id="minimum_strength" value="<?php echo $options['minimum_strength']; ?>" size="5" /> <?php _e('(Any number between .00 and 1 with 1 being a perfect match.)', 'similarity') ?></td>
 			</tr>
 			<tr valign="top">
 
 				<th scope="row" align="right"><?php _e('Default display if no matches', 'similarity') ?>:</th>
-				<td><input name="none_text" type="text" id="none_text" value="<?php echo htmlspecialchars(stripslashes($options['none_text'])); ?>" size="40" /></td>
+				<td colspan="2"><input name="none_text" type="text" id="none_text" value="<?php echo htmlspecialchars(stripslashes($options['none_text'])); ?>" size="40" /></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right"></th>
+				<td align="center"><strong><?php _e('Template functions', 'similarity') ?></strong></td>
+				<td align="center"><strong><?php _e('Auto display functions', 'similarity') ?></strong></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Text and codes before the list', 'similarity') ?>:</th>
 				<td><input name="prefix" type="text" id="prefix" value="<?php echo htmlspecialchars(stripslashes($options['prefix'])); ?>" size="40" /></td>
+				<td><input name="auto_prefix" type="text" id="auto_prefix" value="<?php echo htmlspecialchars(stripslashes($options['auto_prefix'])); ?>" size="40" /></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Text and codes after the list', 'similarity') ?>:</th>
 				<td><input name="suffix" type="text" id="suffix" value="<?php echo htmlspecialchars(stripslashes($options['suffix'])); ?>" size="40" /></td>
+				<td><input name="auto_suffix" type="text" id="auto_suffix" value="<?php echo htmlspecialchars(stripslashes($options['auto_suffix'])); ?>" size="40" /></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right"><?php _e('Output template', 'similarity') ?>:</th>
+				<td><textarea name="output_template" id="output_template" rows="4" cols="32"><?php echo htmlspecialchars(stripslashes($options['output_template'])); ?></textarea></td>
+				<td><textarea name="auto_output_template" id="auto_output_template" rows="4" cols="32"><?php echo htmlspecialchars(stripslashes($options['auto_output_template'])); ?></textarea></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right"></th>
+				<td colspan="2" align="center"><?php _e('Valid template tags', 'similarity') ?>:{link}, {strength}, {url}, {title}</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Display format for similarity strength', 'similarity') ?>:</th>
-				<td>
+				<td colspan="2">
 					<input type="radio" name="format" id="format" value="color"<?php if ($options['format'] == 'color') echo ' checked'; ?>><?php _e('Visual', 'similarity') ?></input>&nbsp;
 					<input type="radio" name="format" id="format" value="percent"<?php if ($options['format'] == 'percent') echo ' checked'; ?>><?php _e('Percent', 'similarity') ?></input>&nbsp;
 					<input type="radio" name="format" id="format" value="text"<?php if ($options['format'] == 'text') echo ' checked'; ?>><?php _e('Text', 'similarity') ?></input>&nbsp;
@@ -540,35 +569,31 @@ function options_page(){
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Custom text for strength', 'similarity') ?>:</th>
-				<td><input name="text_strong" type="text" id="text_strong" value="<?php echo htmlspecialchars(stripslashes($options['text_strong'])); ?>" size="40" /> &gt;75%</td>
+				<td colspan="2"><input name="text_strong" type="text" id="text_strong" value="<?php echo htmlspecialchars(stripslashes($options['text_strong'])); ?>" size="40" /> &gt;75%</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right">&nbsp;</th>
-				<td><input name="text_mild" type="text" id="text_mild" value="<?php echo htmlspecialchars(stripslashes($options['text_mild'])); ?>" size="40" /> 75% &gt; 50%</td>
+				<td colspan="2"><input name="text_mild" type="text" id="text_mild" value="<?php echo htmlspecialchars(stripslashes($options['text_mild'])); ?>" size="40" /> 75% &gt; 50%</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right">&nbsp;</th>
-				<td><input name="text_weak" type="text" id="text_weak" value="<?php echo htmlspecialchars(stripslashes($options['text_weak'])); ?>" size="40" /> 50% &gt; 25%</td>
+				<td colspan="2"><input name="text_weak" type="text" id="text_weak" value="<?php echo htmlspecialchars(stripslashes($options['text_weak'])); ?>" size="40" /> 50% &gt; 25%</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right">&nbsp;</th>
-				<td><input name="text_tenuous" type="text" id="text_tenuous" value="<?php echo htmlspecialchars(stripslashes($options['text_tenuous'])); ?>" size="40" /> &lt; 25%</td>
+				<td colspan="2"><input name="text_tenuous" type="text" id="text_tenuous" value="<?php echo htmlspecialchars(stripslashes($options['text_tenuous'])); ?>" size="40" /> &lt; 25%</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Relative mixing weights', 'similarity') ?>:</th>
-				<td><input name="tag_weight" type="text" id="tag_weight" value="<?php echo htmlspecialchars(stripslashes($options['tag_weight'])); ?>" size="40" /> <?php _e('Tags', 'similarity') ?></td>
+				<td colspan="2"><input name="tag_weight" type="text" id="tag_weight" value="<?php echo htmlspecialchars(stripslashes($options['tag_weight'])); ?>" size="40" /> <?php _e('Tags', 'similarity') ?></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right">&nbsp;</th>
-				<td><input name="cat_weight" type="text" id="cat_weight" value="<?php echo htmlspecialchars(stripslashes($options['cat_weight'])); ?>" size="40" /> <?php _e('Categories', 'similarity') ?></td>
-			</tr>
-			<tr valign="top">
-				<th scope="row" align="right"><?php _e('Output template', 'similarity') ?>:</th>
-				<td><textarea name="output_template" id="output_template" rows="4" cols="60"><?php echo htmlspecialchars(stripslashes($options['output_template'])); ?></textarea><br/><?php _e('Valid template tags', 'similarity') ?>:{link}, {strength}, {url}, {title}</td>
+				<td colspan="2"><input name="cat_weight" type="text" id="cat_weight" value="<?php echo htmlspecialchars(stripslashes($options['cat_weight'])); ?>" size="40" /> <?php _e('Categories', 'similarity') ?></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Show one more random related post', 'similarity') ?>:</th>
-				<td>
+				<td colspan="2">
 					<input type="radio" name="one_extra" id="one_extra" value="true"<?php if ($options['one_extra'] == 'true') echo ' checked'; ?>><?php _e('Yes', 'similarity') ?></input>&nbsp;
 					<input type="radio" name="one_extra" id="one_extra" value="false"<?php if ($options['one_extra'] == 'false') echo ' checked'; ?>><?php _e('No', 'similarity') ?></input>&nbsp;
 					<strong><?php _e('Minimum match strength', 'similarity') ?></strong><?php _e(' (optional)', 'similarity') ?>:&nbsp; 
@@ -576,7 +601,7 @@ function options_page(){
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Auto-display list from function', 'similarity') ?>:</th>
-				<td>
+				<td colspan="2">
 					<input type="radio" name="adf" id="adf" value="none"<?php if ($options['adf'] == 'none') echo ' checked'; ?>><?php _e('None', 'similarity') ?></input>&nbsp;
 					<input type="radio" name="adf" id="adf" value="tag"<?php if ($options['adf'] == 'tag') echo ' checked'; ?>>sim_by_tag</input>&nbsp;
 					<input type="radio" name="adf" id="adf" value="cat"<?php if ($options['adf'] == 'cat') echo ' checked'; ?>>sim_by_cat</input>&nbsp;
@@ -585,7 +610,7 @@ function options_page(){
 			</tr>
 			<tr valign="top">
 				<th scope="row" align="right"><?php _e('Display Similarity on pages', 'similarity') ?>:</th>
-				<td>
+				<td colspan="2">
 					<input type="radio" name="sim_pages" id="sim_pages" value="yes"<?php if ($options['sim_pages'] == 'yes') echo ' checked'; ?>><?php _e('Yes', 'similarity') ?></input>&nbsp;
 					<input type="radio" name="sim_pages" id="sim_pages" value="no"<?php if ($options['sim_pages'] == 'no') echo ' checked'; ?>><?php _e('No', 'similarity') ?></input>
 					(<?php _e('Only useful with if your pages have tags and/or categories assigned.', 'similarity') ?>)
