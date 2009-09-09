@@ -3,7 +3,7 @@
 Plugin Name: Similarity
 Plugin URI: http://www.davidjmiller.org/2008/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)
-Version: 2.12
+Version: 2.13
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -15,7 +15,7 @@ Author URI: http://www.davidjmiller.org/
 		e.g.: <?php sim_by_mix(); ?> determines similarity based on the categories and tags assigned to the posts weighting each according to the ratio you assign
 		e.g.: <?php sim_by_tag_multi(); ?> determines similarity based on the tags applied to the first post on milti-post pages
 		e.g.: <?php sim_by_cat_multi(); ?> determines similarity based on the categories assigned to the first post on milti-post pages
-		e.g.: <?php sim_by_mix(multi); ?> determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
+		e.g.: <?php sim_by_mix_multi(); ?> determines similarity based on the categories and tags assigned to the first post on milti-post pages weighting each according to the ratio you assign
 	Shortcodes:
 		e.g.: [SIM-BY-TAG] 
 		e.g.: [SIM-BY-CAT] 
@@ -30,37 +30,43 @@ load_plugin_textdomain('similarity', 'wp-content/plugins/similarity');
 
 function sim_by_tag() {
 	$list = get_list("tag");
+	echo '<div class="similarity">';
 	echo print_similarity($list);
-	echo '<!-- Similarity - Sim_by_Tag -->';
+	echo '</div><!-- Similarity - Sim_by_Tag -->';
 }
 function sim_by_cat() {
 	$list = get_list("cat");
+	echo '<div class="similarity">';
 	echo print_similarity($list);
-	echo '<!-- Similarity - Sim_by_Cat -->';
-}
-function sim_by_mix_multi() {
-	$taglist = get_list("firstt");
-	$catlist = get_list("firstc");
-	$list = mix_lists($taglist, $catlist);
-	echo print_similarity($list);
-	echo '<!-- Similarity - Sim_by_Mix -->';
-}
-function sim_by_tag_multi() {
-	$list = get_list("firstt");
-	echo print_similarity($list);
-	echo '<!-- Similarity - Sim_by_Tag -->';
-}
-function sim_by_cat_multi() {
-	$list = get_list("firstc");
-	echo print_similarity($list);
-	echo '<!-- Similarity - Sim_by_Cat -->';
+	echo '</div><!-- Similarity - Sim_by_Cat -->';
 }
 function sim_by_mix() {
 	$taglist = get_list("tag");
 	$catlist = get_list("cat");
 	$list = mix_lists($taglist, $catlist);
+	echo '<div class="similarity">';
 	echo print_similarity($list);
-	echo '<!-- Similarity - Sim_by_Mix -->';
+	echo '</div><!-- Similarity - Sim_by_Mix -->';
+}
+function sim_by_tag_multi() {
+	$list = get_list("firstt");
+	echo '<div class="similarity_sb">';
+	echo print_similarity($list);
+	echo '</div><!-- Similarity - Sim_by_Tag -->';
+}
+function sim_by_cat_multi() {
+	$list = get_list("firstc");
+	echo '<div class="similarity_sb">';
+	echo print_similarity($list);
+	echo '</div><!-- Similarity - Sim_by_Cat -->';
+}
+function sim_by_mix_multi() {
+	$taglist = get_list("firstt");
+	$catlist = get_list("firstc");
+	$list = mix_lists($taglist, $catlist);
+	echo '<div class="similarity_sb">';
+	echo print_similarity($list);
+	echo '</div><!-- Similarity - Sim_by_Mix -->';
 }
 
 function auto_display($content) {

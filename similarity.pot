@@ -3,193 +3,203 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/similarity\n"
-"POT-Creation-Date: 2009-09-05 13:35+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-09-05 13:53+0000\n"
+"PO-Revision-Date: 2009-09-06 08:52+0100\n"
+"Last-Translator: Krzysztof Kudłacik <null@adres.pl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: similarity.php:246 similarity.php:250 similarity.php:252 similarity.php:254
-#: similarity.php:256 similarity.php:268 similarity.php:271
+#: similarity.php:252
+#: similarity.php:256
+#: similarity.php:258
+#: similarity.php:260
+#: similarity.php:262
+#: similarity.php:274
+#: similarity.php:277
 msgid "RANDOM"
-msgstr ""
+msgstr "Losowe"
 
-#: similarity.php:410
+#: similarity.php:416
 msgid "Similarity Options"
-msgstr ""
+msgstr "Ustawienia Similarity"
 
 #. #-#-#-#-#  plugin.pot (PACKAGE VERSION)  #-#-#-#-#
 #. Plugin Name of an extension
-#: similarity.php:410
+#: similarity.php:416
 msgid "Similarity"
-msgstr ""
+msgstr "Podobieństwo"
 
-#: similarity.php:419 similarity.php:473
+#: similarity.php:425
+#: similarity.php:479
 msgid "Unique Post"
-msgstr ""
+msgstr "Unikalny wpis"
 
-#: similarity.php:426 similarity.php:480
+#: similarity.php:432
+#: similarity.php:486
 msgid "Strong"
-msgstr ""
+msgstr "wysokie"
 
-#: similarity.php:427 similarity.php:481
+#: similarity.php:433
+#: similarity.php:487
 msgid "Mild"
-msgstr ""
+msgstr "umiarkowane"
 
-#: similarity.php:428 similarity.php:482
+#: similarity.php:434
+#: similarity.php:488
 msgid "Weak"
-msgstr ""
+msgstr "słabe"
 
-#: similarity.php:429 similarity.php:483
+#: similarity.php:435
+#: similarity.php:489
 msgid "Tenuous"
-msgstr ""
+msgstr "znikome"
 
-#: similarity.php:470
+#: similarity.php:476
 msgid "Options saved"
-msgstr ""
+msgstr "ustawienia zapamiętane"
 
-#: similarity.php:492
+#: similarity.php:498
 msgid "Factory Settings applied"
-msgstr ""
-
-#: similarity.php:500
-msgid " Options"
-msgstr ""
-
-#: similarity.php:501
-msgid "Help and Instructions"
-msgstr ""
+msgstr "Włączono ustawienia domyślne"
 
 #: similarity.php:506
+msgid " Options"
+msgstr "Ustawienia"
+
+#: similarity.php:507
+msgid "Help and Instructions"
+msgstr "Pomoc oraz instrukcje"
+
+#: similarity.php:512
 msgid "Number of posts to show"
-msgstr ""
+msgstr "Ile wpisów wyświetlić"
 
-#: similarity.php:510 similarity.php:568
+#: similarity.php:516
+#: similarity.php:574
 msgid "Minimum match strength"
-msgstr ""
+msgstr "Minimalna wartość dopasowania"
 
-#: similarity.php:511
+#: similarity.php:517
 msgid "(Any number between .00 and 1 with 1 being a perfect match.)"
-msgstr ""
+msgstr "(dowolna liczba od 0 do 1, gdzie 1 jest idealnym dopasowaniem)"
 
-#: similarity.php:515
+#: similarity.php:521
 msgid "Default display if no matches"
-msgstr ""
+msgstr "Wyświetl, gdy brak podobnych"
 
-#: similarity.php:519
+#: similarity.php:525
 msgid "Text and codes before the list"
-msgstr ""
-
-#: similarity.php:523
-msgid "Text and codes after the list"
-msgstr ""
-
-#: similarity.php:527
-msgid "Display format for similarity strength"
-msgstr ""
+msgstr "Tekst lub HTML przed listą"
 
 #: similarity.php:529
+msgid "Text and codes after the list"
+msgstr "Tekst lub HTML po liście"
+
+#: similarity.php:533
+msgid "Display format for similarity strength"
+msgstr "Jak pokazywać stopień podobieństwa"
+
+#: similarity.php:535
 msgid "Visual"
-msgstr ""
-
-#: similarity.php:530
-msgid "Percent"
-msgstr ""
-
-#: similarity.php:531
-msgid "Text"
-msgstr ""
-
-#: similarity.php:532
-msgid "Value"
-msgstr ""
+msgstr "Kolorem"
 
 #: similarity.php:536
+msgid "Percent"
+msgstr "Procentem"
+
+#: similarity.php:537
+msgid "Text"
+msgstr "Tekstem"
+
+#: similarity.php:538
+msgid "Value"
+msgstr "Liczbą"
+
+#: similarity.php:542
 msgid "Custom text for strength"
-msgstr ""
+msgstr "Własny tekst z dopasowaniem"
 
-#: similarity.php:552
+#: similarity.php:558
 msgid "Relative mixing weights"
-msgstr ""
+msgstr "Wzajemna waga kategorii i etykiet"
 
-#: similarity.php:553
+#: similarity.php:559
 msgid "Tags"
-msgstr ""
+msgstr "Etykiety"
 
-#: similarity.php:557
+#: similarity.php:563
 msgid "Categories"
-msgstr ""
+msgstr "Kategorie"
 
-#: similarity.php:560
+#: similarity.php:566
 msgid "Output template"
-msgstr ""
+msgstr "Szablon wyświetlania"
 
-#: similarity.php:561
+#: similarity.php:567
 msgid "Valid template tags"
-msgstr ""
+msgstr "Dopuszczalne znaczniki"
 
-#: similarity.php:564
+#: similarity.php:570
 msgid "Show one more random related post"
-msgstr ""
-
-#: similarity.php:566 similarity.php:583
-msgid "Yes"
-msgstr ""
-
-#: similarity.php:567 similarity.php:584
-msgid "No"
-msgstr ""
-
-#: similarity.php:568
-msgid " (optional)"
-msgstr ""
+msgstr "Pokaż losowo dodatkowy post"
 
 #: similarity.php:572
+#: similarity.php:589
+msgid "Yes"
+msgstr "Tak"
+
+#: similarity.php:573
+#: similarity.php:590
+msgid "No"
+msgstr "Nie"
+
+#: similarity.php:574
+msgid " (optional)"
+msgstr "(opcjonalne)"
+
+#: similarity.php:578
 msgid "Auto-display list from function"
 msgstr ""
 
-#: similarity.php:574
+#: similarity.php:580
 msgid "None"
-msgstr ""
+msgstr "żaden"
 
-#: similarity.php:581
+#: similarity.php:587
 msgid "Display Similarity on pages"
-msgstr ""
-
-#: similarity.php:585
-msgid "Only useful with if your pages have tags and/or categories assigned."
-msgstr ""
+msgstr "Pokaż podobne także na stronach"
 
 #: similarity.php:591
-msgid "Update"
-msgstr ""
+msgid "Only useful with if your pages have tags and/or categories assigned."
+msgstr "Przydatne, o ile blog posiada strony z etykietami i/lub kategoriami"
 
-#: similarity.php:592
+#: similarity.php:597
+msgid "Update"
+msgstr "Aktualizacja"
+
+#: similarity.php:598
 msgid "Restore Defaults"
-msgstr ""
+msgstr "Przywróć ustawienia domyślne"
 
 #. Plugin URI of an extension
 msgid "http://www.davidjmiller.org/2008/similarity/"
-msgstr ""
+msgstr "http://www.davidjmiller.org/2008/similarity/"
 
 #. Description of an extension
-msgid ""
-"Returns links to similar posts. Similarity is determined by the way posts "
-"are tagged or by their categories. Compatible with Wordpress 2.3 and above. "
-"(Tested on 2.3, 2.5, 2.6, 2.7)"
-msgstr ""
+msgid "Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7)"
+msgstr "Wtyczka zwraca linki do podobnych wpisów. Podobieństwo oceniane jest na podstawie etykiet wpisów lub ich kategorii. Wtyczka zgodna z Wordpressem 2.3 i nowszymi. Testowana była na 2.3, 2.5, 2.6 i 2.7"
 
 #. Author of an extension
 msgid "David Miller"
-msgstr ""
+msgstr "David Miller"
 
 #. Author URI of an extension
 msgid "http://www.davidjmiller.org/"
-msgstr ""
+msgstr "http://www.davidjmiller.org/"
+
