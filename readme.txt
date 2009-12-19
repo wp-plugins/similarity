@@ -2,7 +2,7 @@
 Contributors: davidjmillerorg
 Tags: posts, tags, categories, related posts, related, similarity, similar posts, similar
 Requires at least: 2.3
-Tested up to: 2.8.4
+Tested up to: 2.9
 Stable tag: trunk
 
 Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both.
