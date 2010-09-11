@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Similarity
-Plugin URI: http://www.davidjmiller.org/2008/similarity/
+Plugin URI: http://plugins.davidjmiller.org/similarity/
 Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7, 2.8)
 Version: 2.13.1
 Author: David Miller
@@ -517,7 +517,7 @@ function options_page(){
 	?>
 		<div class="wrap">
 		<h2><?php echo ucwords(str_replace('-', ' ', basename(__FILE__, ".php"). __(' Options', 'similarity'))); ?></h2>
-		<h3><a href="http://www.davidjmiller.org/2008/similarity/"><?php _e('Help and Instructions', 'similarity') ?></a></h3>
+		<h3><a href="http://plugins.davidjmiller.org/similarity/"><?php _e('Help and Instructions', 'similarity') ?></a></h3>
 		<form method="post" action="">
 		<fieldset class="options">
 		<table class="optiontable">
