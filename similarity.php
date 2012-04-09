@@ -2,8 +2,8 @@
 /*
 Plugin Name: Similarity
 Plugin URI: http://plugins.davidjmiller.org/similarity/
-Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above. (Tested on 2.3, 2.5, 2.6, 2.7, 2.8)
-Version: 2.13.1
+Description: Returns links to similar posts. Similarity is determined by the way posts are tagged or by their categories. Compatible with Wordpress 2.3 and above.
+Version: 3.0
 Author: David Miller
 Author URI: http://www.davidjmiller.org/
 */
@@ -115,14 +115,13 @@ function print_similarity($list, $template = 'default') {
 	if ($template == 'auto') {
 		$prefix = stripslashes($options['auto_prefix']);
 		$suffix = stripslashes($options['auto_suffix']);
-		$format = stripslashes($options['auto_format']);
 		$output_template = stripslashes($options['auto_output_template']);
 	} else {
 		$prefix = stripslashes($options['prefix']);
 		$suffix = stripslashes($options['suffix']);
-		$format = stripslashes($options['format']);
 		$output_template = stripslashes($options['output_template']);
 	}
+	$format = stripslashes($options['format']);
 	$minimum_strength = stripslashes($options['minimum_strength']);
 	$random_min = stripslashes($options['random_min']);
 	// an empty output_template makes no sense so we fall back to the default
@@ -488,11 +487,10 @@ function options_page(){
 		$options['none_text'] = '<ul><li>'.__('Unique Post', 'similarity').'</li></ul>';
 		$options['prefix'] = '<ul>';
 		$options['suffix'] = '</ul>';
-		$options['format'] = 'value';
 		$options['output_template'] = '<li>{link} ({strength})</li>';
+		$options['format'] = 'value';
 		$options['auto_prefix'] = '<ul>';
 		$options['auto_suffix'] = '</ul>';
-		$options['auto_format'] = 'value';
 		$options['auto_output_template'] = '<li>{link} ({strength})</li>';
 		$options['tag_weight'] = 1;
 		$options['cat_weight'] = 1;

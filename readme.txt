@@ -2,7 +2,7 @@
 Contributors: davidjmillerorg
 Tags: posts, tags, categories, related posts, related, similarity, similar posts, similar
 Requires at least: 2.3
-Tested up to: 3.0.1
+Tested up to: 3.3.1
 Stable tag: trunk
 
 Similarity displays a list of posts similar to the current post with similarity being determined based on tags, categories, or both.
@@ -46,6 +46,10 @@ If you use the 'Show one more random related post' option the last item in the l
 1. This is a sample options page displayed in Wordpress 2.8
 
 == Changelog ==
+
+= 3.0 =
+* Formatting the strength for the auto-generated lists was always listed the strength value regardless of the setting. Thanks to Gerhard for alerting me to the problem.
+* For those who are curious about why I went to a new major version number for such a minor fix, the reason is that I really should have moved to a new major version number with the functionality added a few releases ago - so better late than never.
 
 = 2.13.1 =
 * New options make it possible to layout and style the php function generated lists (for sidebars) independent of the auto-generated list.
